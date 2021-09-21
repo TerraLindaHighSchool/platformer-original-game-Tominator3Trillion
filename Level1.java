@@ -14,7 +14,7 @@ public class Level1 extends World
      * 
      */
     private final float GRAVITY = 0.0667f;
-    //private final GreenfootSound MUSIC = new GreenfootSound("zapsplat_024.mp3");
+    private final GreenfootSound MUSIC = new GreenfootSound("zapsplat_024.mp3");
     
     public Level1()
     {    
@@ -30,7 +30,7 @@ public class Level1 extends World
     private void prepare()
     {
 
-        Player player = new Player();
+        Player player = new Player(3, 5.6f, GRAVITY, 3, 3, Level1.class, MUSIC);
         addObject(player,95,650);
         Door door = new Door();
         addObject(door,1171, 44);
@@ -45,7 +45,7 @@ public class Level1 extends World
         addObject(new SmBrickWall(), 1000, 200);
         addObject(new SmBrickWall(), 220, 280);
         addObject(new TrapDoor(GRAVITY), 60, 400);
-        addObject(new TrapDoor(GRAVITY), 479, 157);
+        addObject(new TrapDoor(GRAVITY), 523, 167);
         addObject(new Bomb(GRAVITY), 1050, 765);
         addObject(new Gem(), 975, 160);
         addObject(new Gem(), 1030, 160);
@@ -53,6 +53,7 @@ public class Level1 extends World
         setPaintOrder(Player.class, Platform.class, Obstacle.class, Collectable.class,
             Door.class, HUD.class);
         player.setLocation(96,627);
+
     }
     
      private void spawn()

@@ -14,7 +14,7 @@ public class BrickWall extends Platform
      */
     
     public BrickWall() {
-        getImage().scale(480,34);
+        //getImage().scale(480,34);
     }
     public void act()
     {

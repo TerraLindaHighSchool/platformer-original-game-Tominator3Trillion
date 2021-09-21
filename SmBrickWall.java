@@ -14,7 +14,7 @@ public class SmBrickWall extends Platform
      */
     
     public SmBrickWall() {
-        getImage().scale(120,34);
+        //getImage().scale(120,34);
     }
     
     public void act()

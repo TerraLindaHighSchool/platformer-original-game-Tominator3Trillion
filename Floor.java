@@ -13,7 +13,7 @@ public class Floor extends Platform
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public Floor() {
-        getImage().scale(1200,12);
+        //getImage().scale(1200,12);
     }
     
     public void act()

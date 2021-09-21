@@ -16,7 +16,7 @@ public class TrapDoor extends Obstacle
     private final float GRAVITY;
 
     public TrapDoor(float gravity) {
-        getImage().scale(120,34);
+        //getImage().scale(120,34);
         GRAVITY = gravity;
     }
     
