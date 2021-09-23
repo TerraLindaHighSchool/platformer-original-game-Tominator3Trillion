@@ -28,6 +28,7 @@ public class Player extends Actor
     public Player(int speed, float jumpForce, float gravity,
     int maxHealth, int maxPowerup, Class nextLevel, GreenfootSound music)
     {
+        getImage().scale(150, 150);
         this.speed = speed;
         JUMP_FORCE = jumpForce;
         GRAVITY = gravity;
@@ -35,12 +36,12 @@ public class Player extends Actor
         MUSIC = music;
         STANDING_IMAGE = getImage();
         WALK_ANIMATION = new GreenfootImage[]
-        { new GreenfootImage("walk0.png"),
-        new GreenfootImage ("walk1.png"),
-        new GreenfootImage ("walk2.png"),
-        new GreenfootImage ("walk3.png"),
-        new GreenfootImage ("walk4.png"),
-        new GreenfootImage ("walk5.png")
+        { //new GreenfootImage("bob1.png"),
+        new GreenfootImage ("bob1.png"),
+        new GreenfootImage ("bob2.png"),
+        new GreenfootImage ("bob3.png"),
+        new GreenfootImage ("bob4.png"),
+        new GreenfootImage ("bob5.png")
         };
 }
     
@@ -58,6 +59,7 @@ public class Player extends Actor
             if(walkIndex < WALK_ANIMATION.length)
             {
                 setImage (WALK_ANIMATION[walkIndex]);
+                getImage().scale(150, 150);
                 walkIndex++;
             }
             else

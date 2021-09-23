@@ -45,7 +45,7 @@ public class Level1 extends World
         addObject(new SmBrickWall(), 1000, 200);
         addObject(new SmBrickWall(), 220, 280);
         addObject(new TrapDoor(GRAVITY), 60, 400);
-        addObject(new TrapDoor(GRAVITY), 523, 167);
+        addObject(new TrapDoor(GRAVITY), 470, 160);
         addObject(new Bomb(GRAVITY), 1050, 765);
         addObject(new Gem(), 975, 160);
         addObject(new Gem(), 1030, 160);
