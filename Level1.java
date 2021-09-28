@@ -22,6 +22,8 @@ public class Level1 extends World
  
     private GreenfootImage bgImage, bgBase;
     private int scrollPosition = 0;
+    
+    private int LEVEL_WIDTH = 2000;
 
      
     
@@ -44,8 +46,7 @@ public class Level1 extends World
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
      */
-    
-    
+
     private void prepare()
     {
 
@@ -73,6 +74,8 @@ public class Level1 extends World
             Door.class, HUD.class);
         player.setLocation(96,627);
 
+        Bomb bomb2 = new Bomb(1);
+        addObject(bomb2,608,76);
     }
     
      private void spawn()

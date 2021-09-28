@@ -92,14 +92,34 @@ public class Player extends Actor
             }
             isWalking = true;
             isFacingLeft = false;
-            move(speed);
+            //move(speed);
+            if(getX() != (int)(getWorld().getWidth()/2)) {
+                setLocation(getX()+speed, getY());
+            }
+            for(Actor o : getWorld().getObjects(Actor.class)) {
+                if(!(o instanceof Player)) {
+                    if(!(getX() != (int)(getWorld().getWidth()/2))) {
+                        o.setLocation(o.getX()-speed, o.getY());
+                    }
+                }
+            }
         }if(Greenfoot.isKeyDown("left")) {
             if(!isFacingLeft) {
                 mirrorImages();
             }
             isWalking = true;
             isFacingLeft = true;
-            move(-speed);
+            //move(-speed);
+            if(getX() != (int)(getWorld().getWidth()/2)) {
+                setLocation(getX()-speed, getY());
+            }
+            for(Actor o : getWorld().getObjects(Actor.class)) {
+                if(!(o instanceof Player)) {
+                    if(!(getX() != (int)(getWorld().getWidth()/2))) {
+                        o.setLocation(o.getX()+speed, o.getY());
+                    }
+                }
+            }
         }
         
         if(!(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("right")))
@@ -112,6 +132,7 @@ public class Player extends Actor
         {
             yVelocity = JUMP_FORCE;
             isJumping = true;
+            Greenfoot.playSound("jump.mp3");
         }
         if(isJumping && yVelocity > 0) {
             setLocation(getX(), getY() - (int) yVelocity);
