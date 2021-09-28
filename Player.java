@@ -22,7 +22,7 @@ public class Player extends Actor
     private final GreenfootImage STANDING_IMAGE;
     private final float JUMP_FORCE;
     private final float GRAVITY;
-    private final Class NEXT_LEVEL;
+    private final Class NEXT_LEVEL;    
     private final GreenfootSound MUSIC;
     
     public Player(int speed, float jumpForce, float gravity,
@@ -126,7 +126,32 @@ public class Player extends Actor
             yVelocity -= GRAVITY;
         }
     }
-    private void onCollision() {}
+    private void onCollision( )
+    {
+        if(isTouching(Door.class))
+        {
+            World world = null;
+            try 
+            {
+                world = (World) NEXT_LEVEL.newInstance();
+            }   
+            catch (InstantiationException e) 
+            {
+                System.out.println("Class cannot be instantiated");
+            } catch (IllegalAccessException e) {
+                System.out.println("Cannot access class constructor");
+            } 
+            Greenfoot.setWorld(world);
+        }
+        if(isTouching(Obstacle.class)) {
+            getWorld().removeObject(getOneIntersectingObject(Obstacle.class));
+        }
+        
+        if(isTouching(Platform.class)) {
+            yVelocity=-1;
+            fall();
+        }
+    }
     private void mirrorImages() {
         for(int i =0; i < WALK_ANIMATION.length; i++) {
             WALK_ANIMATION[i].mirrorHorizontally();

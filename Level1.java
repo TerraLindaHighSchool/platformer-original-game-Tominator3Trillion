@@ -49,7 +49,7 @@ public class Level1 extends World
     private void prepare()
     {
 
-        Player player = new Player(3, 5.6f, GRAVITY, 3, 3, Level1.class, MUSIC);
+        Player player = new Player(3, 5.6f, GRAVITY, 3, 3, Level2.class, MUSIC);
         addObject(player,95,650);
         Door door = new Door();
         addObject(door,1171, 44);
