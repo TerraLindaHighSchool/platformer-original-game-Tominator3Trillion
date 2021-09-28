@@ -16,17 +16,36 @@ public class Level1 extends World
     private final float GRAVITY = 0.0667f;
     private final GreenfootSound MUSIC = new GreenfootSound("zapsplat_024.mp3");
     
+    private static final String BG_IMAGE_NAME = "skyBox.png";
+    private static final double SCROLL_SPEED = 1.25;
+    private static final int PIC_WIDTH = (new GreenfootImage(BG_IMAGE_NAME)).getWidth();
+ 
+    private GreenfootImage bgImage, bgBase;
+    private int scrollPosition = 0;
+
+     
+    
+    
     public Level1()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1200, 700, 1, false); 
+        setBackground(BG_IMAGE_NAME);
+        bgImage = new GreenfootImage(getBackground());
+        bgBase = new GreenfootImage(PIC_WIDTH, getHeight());
+        bgBase.drawImage(bgImage, 0, 0);
         prepare();
     }
+    
+     
+     
     
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
      */
+    
+    
     private void prepare()
     {
 
@@ -68,8 +87,19 @@ public class Level1 extends World
         }
     }
     
+    private void paint(int position)
+    {
+        GreenfootImage bg = getBackground();
+        bg.drawImage(bgBase, position, 0);
+        bg.drawImage(bgImage, position + PIC_WIDTH, 0);
+    }
+    
     public void act()
     {
+        scrollPosition -= SCROLL_SPEED;
+        while(SCROLL_SPEED > 0 && scrollPosition < -PIC_WIDTH) scrollPosition += PIC_WIDTH;
+        while(SCROLL_SPEED < 0 && scrollPosition > 0) scrollPosition -= PIC_WIDTH;
+        paint(scrollPosition);
         spawn();
     }
 }

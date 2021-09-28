@@ -17,7 +17,7 @@ public class Player extends Actor
     private float yVelocity;
     private boolean isWalking;
     private boolean isJumping;
-    private boolean isFacingLeft=false;
+    private boolean isFacingLeft=true;
     private final GreenfootImage[] WALK_ANIMATION;
     private final GreenfootImage STANDING_IMAGE;
     private final float JUMP_FORCE;
