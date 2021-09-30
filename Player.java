@@ -92,12 +92,13 @@ public class Player extends Actor
             }
             isWalking = true;
             isFacingLeft = false;
+            
             //move(speed);
-            if(getX() != (int)(getWorld().getWidth()/2)) {
+            if(getX() != (int)(getWorld().getWidth()/2)&& getX() < (int)(getWorld().getWidth()/2)) {
                 setLocation(getX()+speed, getY());
             }
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player)) {
+                if(!(o instanceof Player || o instanceof Floor)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
                         o.setLocation(o.getX()-speed, o.getY());
                     }
@@ -110,16 +111,21 @@ public class Player extends Actor
             isWalking = true;
             isFacingLeft = true;
             //move(-speed);
-            if(getX() != (int)(getWorld().getWidth()/2)) {
+            if(getX() != (int)(getWorld().getWidth()/2) && getX() > (int)(getWorld().getWidth()/2)) {
                 setLocation(getX()-speed, getY());
             }
+            
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player)) {
+                if(!(o instanceof Player || o instanceof Floor)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
                         o.setLocation(o.getX()+speed, o.getY());
                     }
                 }
             }
+        }
+        if(isWalking  && getX() == (int)(getWorld().getWidth()/2)) {
+            Floor f = getWorld().getObjects(Floor.class).get(0);
+            f.scroll(isFacingLeft ? -speed : speed);
         }
         
         if(!(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("right")))

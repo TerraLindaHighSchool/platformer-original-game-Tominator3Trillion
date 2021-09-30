@@ -8,16 +8,36 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Floor extends Platform
 {
-    /**
-     * Act - do whatever the Floor wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public Floor() {
-        //getImage().scale(1200,12);
-    }
+ 
     
-    public void act()
+    private static final String bgImageName = "floor_grass.png";
+    //private static final double scrollSpeed = 2.5;
+    private static final int picWidth = (new GreenfootImage(bgImageName)).getWidth();
+ 
+    private GreenfootImage bgImage, bgBase;
+    private int scrollPosition = 0;
+     
+    public Floor()
+    {    
+        //super(800, 400, 1);
+        setImage(bgImageName);
+        bgImage = new GreenfootImage(getImage());
+        bgBase = new GreenfootImage(picWidth, getImage().getHeight());
+        bgBase.drawImage(bgImage, 0, 0);
+    }
+     
+     public void scroll(double scrollSpeed)
     {
-        // Add your action code here.
+        scrollPosition -= scrollSpeed;
+        while(scrollSpeed > 0 && scrollPosition < -picWidth) scrollPosition += picWidth;
+        while(scrollSpeed < 0 && scrollPosition > 0) scrollPosition -= picWidth;
+        paint(scrollPosition);
+    }
+     
+     private void paint(int position)
+    {
+        GreenfootImage bg = getImage();
+        bg.drawImage(bgBase, position, 0);
+        bg.drawImage(bgImage, position + picWidth, 0);
     }
 }
