@@ -170,7 +170,11 @@ public class Player extends Actor
             } 
             Greenfoot.setWorld(world);
         }
-        if(isTouching(Obstacle.class)) {
+        if(isTouching(AcidRain.class)) {
+            AcidRain ar = ((AcidRain)getOneIntersectingObject(AcidRain.class));
+            ar.yVelocity = 0f;
+            ar.isSplashing = true;
+        } else if(isTouching(Obstacle.class)) {
             getWorld().removeObject(getOneIntersectingObject(Obstacle.class));
         }
         

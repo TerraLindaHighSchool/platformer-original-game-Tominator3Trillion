@@ -11,6 +11,12 @@ public abstract class Obstacle extends Actor
     
     protected abstract void fall();
     
+    protected boolean isOnFloor() {
+        Actor ground = getOneObjectAtOffset(0,getImage().getHeight()/2, Floor.class);
+        
+        return ground != null;
+    }
+    
     protected boolean isOnGround() {
         Actor ground = getOneObjectAtOffset(0,getImage().getHeight()/2, Platform.class);
         
