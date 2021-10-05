@@ -17,7 +17,7 @@ public class Player extends Actor
     private float yVelocity;
     private boolean isWalking;
     private boolean isJumping;
-    private boolean isFacingLeft=true;
+    private boolean isFacingLeft=false;
     private final GreenfootImage[] WALK_ANIMATION;
     private final GreenfootImage STANDING_IMAGE;
     private final float JUMP_FORCE;
@@ -34,6 +34,9 @@ public class Player extends Actor
         GRAVITY = gravity;
         NEXT_LEVEL = nextLevel;
         MUSIC = music;
+        
+        healthCount = maxHealth;
+        health = new Health[maxHealth];
         STANDING_IMAGE = getImage();
         WALK_ANIMATION = new GreenfootImage[]
         { //new GreenfootImage("bob1.png"),
@@ -77,7 +80,15 @@ public class Player extends Actor
     }
     
     
-    public void addedToWorld(World world) {}
+    public void addedToWorld(World world) {
+        health[0] = new Health();
+        world.addObject(health[0], 30, 36);
+        health[1] = new Health();
+        world.addObject(health[1], 72, 36);
+        health[2] = new Health();
+        world.addObject(health[2], 114, 36);
+    }
+    
     private void walk() {
         if(isWalking) {
             animator();
@@ -86,7 +97,12 @@ public class Player extends Actor
             walkIndex = 0;
         }
         
-        if(Greenfoot.isKeyDown("right")) {
+        if(Greenfoot.isKeyDown("right") && !Greenfoot.isKeyDown("left") ) {
+            if(!MUSIC.isPlaying())
+            {
+               MUSIC.playLoop();
+            }
+            
             if(isFacingLeft) {
                 mirrorImages();
             }
@@ -94,29 +110,31 @@ public class Player extends Actor
             isFacingLeft = false;
             
             //move(speed);
-            if(getX() != (int)(getWorld().getWidth()/2)&& getX() < (int)(getWorld().getWidth()/2)) {
-                setLocation(getX()+speed, getY());
+            if(getX() != (int)(getWorld().getWidth()/2)&& getX() < getWorld().getWidth()) {
+                //setLocation(getX()+speed, getY());
+                move(speed);
             }
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof Health)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
                         o.setLocation(o.getX()-speed, o.getY());
                     }
                 }
             }
-        }if(Greenfoot.isKeyDown("left")) {
+        }if(Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right") ) {
             if(!isFacingLeft) {
                 mirrorImages();
             }
             isWalking = true;
             isFacingLeft = true;
             //move(-speed);
-            if(getX() != (int)(getWorld().getWidth()/2) && getX() > (int)(getWorld().getWidth()/2)) {
-                setLocation(getX()-speed, getY());
+            if(getX() != (int)(getWorld().getWidth()/2) && getX() > 0) {
+                //setLocation(getX()-speed, getY());
+                move(-speed);
             }
             
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof Health)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
                         o.setLocation(o.getX()+speed, o.getY());
                     }
@@ -128,7 +146,7 @@ public class Player extends Actor
             f.scroll(isFacingLeft ? -speed : speed);
         }
         
-        if(!(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("right")))
+        if(!(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("right")) || (Greenfoot.isKeyDown("left") && Greenfoot.isKeyDown("right")))
         {
             isWalking = false;
         }
@@ -157,6 +175,7 @@ public class Player extends Actor
     {
         if(isTouching(Door.class))
         {
+            MUSIC.stop();
             World world = null;
             try 
             {
@@ -172,9 +191,16 @@ public class Player extends Actor
         }
         if(isTouching(AcidRain.class)) {
             AcidRain ar = ((AcidRain)getOneIntersectingObject(AcidRain.class));
+            ar.setLocation(ar.getX(),ar.getY()+1);
             ar.yVelocity = 0f;
+            if(!ar.isSplashing) {
+                getWorld().removeObject(health[healthCount - 1]);
+                healthCount--;
+            }
             ar.isSplashing = true;
         } else if(isTouching(Obstacle.class)) {
+            getWorld().removeObject(health[healthCount - 1]);
+            healthCount--;
             getWorld().removeObject(getOneIntersectingObject(Obstacle.class));
         }
         
@@ -187,8 +213,16 @@ public class Player extends Actor
         for(int i =0; i < WALK_ANIMATION.length; i++) {
             WALK_ANIMATION[i].mirrorHorizontally();
         }
+        STANDING_IMAGE.mirrorHorizontally();
     }
-    private void gameOver() {}
+    private void gameOver()
+    {
+        if(healthCount == 0)
+        {
+            MUSIC.stop();
+            Greenfoot.setWorld(new Level1());
+        }
+    }
     private boolean isOnGround() {
         Actor ground = getOneObjectAtOffset(0,getImage().getHeight()/2, Platform.class);
         

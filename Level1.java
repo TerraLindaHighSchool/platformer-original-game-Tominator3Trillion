@@ -15,6 +15,12 @@ public class Level1 extends World
      */
     private final float GRAVITY = 0.0667f;
     private final GreenfootSound MUSIC = new GreenfootSound("zapsplat_024.mp3");
+    private int SPEED = 3;
+    private final float JUMP_FORCE = 5.6f;
+    private int MAX_HEALTH = 3;
+    private int MAX_POWERUP = 3;
+    private Class NEXT_LEVEL = Level2.class;
+    
     
     private static final String BG_IMAGE_NAME = "skyBox.png";
     private static final double SCROLL_SPEED = 1.25;
@@ -50,7 +56,7 @@ public class Level1 extends World
     private void prepare()
     {
 
-        Player player = new Player(3, 5.6f, GRAVITY, 3, 3, Level2.class, MUSIC);
+        Player player = new Player(SPEED,JUMP_FORCE, GRAVITY, MAX_HEALTH, MAX_POWERUP, NEXT_LEVEL, MUSIC);
         addObject(player,95,650);
         Door door = new Door();
         addObject(door,1171, 44);
