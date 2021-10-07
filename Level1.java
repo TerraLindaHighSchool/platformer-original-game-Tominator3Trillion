@@ -77,11 +77,14 @@ public class Level1 extends World
         addObject(new Gem(), 1030, 160);
 
         setPaintOrder(Player.class, Platform.class, Obstacle.class, Collectable.class,
-            Door.class, HUD.class);
+            Door.class,MoneyBox.class, MissileHill.class, HUD.class);
         player.setLocation(96,627);
 
         Bomb bomb2 = new Bomb(1);
         addObject(bomb2,608,76);
+        MoneyBox moneyBox = new MoneyBox();
+        addObject(moneyBox,200,600);
+
     }
     
      private void spawn()

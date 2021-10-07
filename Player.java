@@ -100,7 +100,7 @@ public class Player extends Actor
         if(Greenfoot.isKeyDown("right") && !Greenfoot.isKeyDown("left") ) {
             if(!MUSIC.isPlaying())
             {
-               MUSIC.playLoop();
+               //MUSIC.playLoop();
             }
             
             if(isFacingLeft) {
@@ -117,7 +117,11 @@ public class Player extends Actor
             for(Actor o : getWorld().getObjects(Actor.class)) {
                 if(!(o instanceof Player || o instanceof Floor || o instanceof Health)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        o.setLocation(o.getX()-speed, o.getY());
+                        if(o instanceof MissileHill) {
+                            o.setLocation(o.getX()-(speed/3), o.getY());
+                        } else {
+                            o.setLocation(o.getX()-speed, o.getY());
+                        }
                     }
                 }
             }
@@ -136,7 +140,11 @@ public class Player extends Actor
             for(Actor o : getWorld().getObjects(Actor.class)) {
                 if(!(o instanceof Player || o instanceof Floor || o instanceof Health)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        o.setLocation(o.getX()+speed, o.getY());
+                        if(o instanceof MissileHill) {
+                            o.setLocation(o.getX()+(speed/3), o.getY());
+                        } else {
+                            o.setLocation(o.getX()+speed, o.getY());
+                        }
                     }
                 }
             }
