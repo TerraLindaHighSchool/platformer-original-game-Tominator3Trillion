@@ -60,6 +60,9 @@ public class Player extends Actor
         fall();
         onCollision();
         gameOver();
+        if(getY() > getWorld().getHeight()) {
+            setLocation((int)(getWorld().getWidth()/2), getWorld().getHeight()- 100);
+        }
     } 
     
     private void animator()
@@ -81,12 +84,11 @@ public class Player extends Actor
     
     
     public void addedToWorld(World world) {
-        health[0] = new Health();
-        world.addObject(health[0], 30, 36);
-        health[1] = new Health();
-        world.addObject(health[1], 72, 36);
-        health[2] = new Health();
-        world.addObject(health[2], 114, 36);
+        for(int i = 0; i < health.length; i++)
+        {
+             health[i] = new Health();
+             world.addObject(health[i], 30 + 42 * i, 36);
+        }
     }
     
     private void walk() {
@@ -97,7 +99,7 @@ public class Player extends Actor
             walkIndex = 0;
         }
         
-        if(Greenfoot.isKeyDown("right") && !Greenfoot.isKeyDown("left") ) {
+        if(Greenfoot.isKeyDown("right")  && !Greenfoot.isKeyDown("left") ) {
             if(!MUSIC.isPlaying())
             {
                //MUSIC.playLoop();
@@ -115,9 +117,9 @@ public class Player extends Actor
                 move(speed);
             }
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof Health)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect || o instanceof Nuke)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        if(o instanceof MissileHill) {
+                        if(o instanceof MissileHill|| o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag ) {
                             o.setLocation(o.getX()-(speed/3), o.getY());
                         } else {
                             o.setLocation(o.getX()-speed, o.getY());
@@ -138,9 +140,9 @@ public class Player extends Actor
             }
             
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof Health)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect|| o instanceof Nuke)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        if(o instanceof MissileHill) {
+                        if(o instanceof MissileHill|| o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag) {
                             o.setLocation(o.getX()+(speed/3), o.getY());
                         } else {
                             o.setLocation(o.getX()+speed, o.getY());
@@ -197,18 +199,8 @@ public class Player extends Actor
             } 
             Greenfoot.setWorld(world);
         }
-        if(isTouching(AcidRain.class)) {
-            AcidRain ar = ((AcidRain)getOneIntersectingObject(AcidRain.class));
-            ar.setLocation(ar.getX(),ar.getY()+1);
-            ar.yVelocity = 0f;
-            if(!ar.isSplashing) {
-                getWorld().removeObject(health[healthCount - 1]);
-                healthCount--;
-            }
-            ar.isSplashing = true;
-        } else if(isTouching(Obstacle.class)) {
-            getWorld().removeObject(health[healthCount - 1]);
-            healthCount--;
+        if(isTouching(Obstacle.class) && !isTouching(AcidRain.class) && !isTouching(Rock.class)) {
+            removeHealth();
             getWorld().removeObject(getOneIntersectingObject(Obstacle.class));
         }
         
@@ -217,6 +209,12 @@ public class Player extends Actor
             fall();
         }
     }
+    
+    public void removeHealth() {
+        getWorld().removeObject(health[healthCount - 1]);
+        healthCount--;
+    }
+    
     private void mirrorImages() {
         for(int i =0; i < WALK_ANIMATION.length; i++) {
             WALK_ANIMATION[i].mirrorHorizontally();

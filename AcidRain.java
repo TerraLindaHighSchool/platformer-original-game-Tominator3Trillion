@@ -16,6 +16,7 @@ public class AcidRain extends Obstacle
     private final float GRAVITY;
     private final GreenfootImage RAIN_PIC;
     private final GreenfootImage[] SPLASH_ANIMATION;
+    private final GreenfootSound RAIN_SPLAT = new GreenfootSound("rainSplat.wav");
 
 
     private int frame = 0;
@@ -39,8 +40,16 @@ public class AcidRain extends Obstacle
     public void act()
     {
         
-        if(isOnFloor()) {
+        Player player = (Player)getOneObjectAtOffset(0,getImage().getHeight()/2, Player.class);
+        if(isOnFloor() || player!=null) {
             //setImage(new GreenfootImage("acid_splash.png"));
+            if(player!=null && !isSplashing) {
+                setLocation(getX(),getY()+5);
+                player.removeHealth();
+                //System.out.println("movin");
+                
+            }
+            RAIN_SPLAT.play();
             isSplashing = true;
         } else {
             fall();
@@ -56,7 +65,9 @@ public class AcidRain extends Obstacle
                 }
                 else
                 {
-                    getWorld().removeObject(this);
+                    try {
+                        getWorld().removeObject(this);
+                    }catch(Exception e) {}
                     splashIndex = 0;
                 }
             }

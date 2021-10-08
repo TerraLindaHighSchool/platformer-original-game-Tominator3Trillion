@@ -15,7 +15,7 @@ public class Floor extends Platform
     private static final int picWidth = (new GreenfootImage(bgImageName)).getWidth();
  
     private GreenfootImage bgImage, bgBase;
-    private int scrollPosition = 0;
+    public int scrollPosition = 0;
      
     public Floor()
     {    

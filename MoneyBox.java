@@ -17,6 +17,8 @@ public class MoneyBox extends Platform
     private int frame = 0;
     private int pressIndex = 0;
     
+    public static boolean hasBeenPressed = false;
+    
     public boolean isPressed = false;
     
     public MoneyBox() {
@@ -39,9 +41,11 @@ public class MoneyBox extends Platform
     
     public void act()
     {
-        if(Greenfoot.isKeyDown("m") && isTouching(Player.class) && !isPressed) {
+        if(Greenfoot.isKeyDown("m") && isTouching(Player.class) && !isPressed && !hasBeenPressed) {
             isPressed = true;
+            hasBeenPressed = true;
             Greenfoot.playSound("buttonDown.wav");
+            Greenfoot.playSound("mechanicSound1.mp3");
         }
         if(isPressed) {
             if( frame % 3 == 0)
@@ -54,7 +58,7 @@ public class MoneyBox extends Platform
                 }
                 else
                 {
-                   getWorld().addObject(new MissileHill(),getWorld().getWidth()/2,getWorld().getHeight());
+                   getWorld().addObject(new MissileHill(),getWorld().getWidth()/2,getWorld().getHeight()+100);
                    Greenfoot.playSound("buttonUp.wav");
                    isPressed = false;
                    frame = 0;

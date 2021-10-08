@@ -17,17 +17,17 @@ public class Level1 extends World
     private final GreenfootSound MUSIC = new GreenfootSound("zapsplat_024.mp3");
     private int SPEED = 3;
     private final float JUMP_FORCE = 5.6f;
-    private int MAX_HEALTH = 3;
+    private int MAX_HEALTH = 10;
     private int MAX_POWERUP = 3;
     private Class NEXT_LEVEL = Level2.class;
     
     
-    private static final String BG_IMAGE_NAME = "skyBox.png";
-    private static final double SCROLL_SPEED = 1.25;
-    private static final int PIC_WIDTH = (new GreenfootImage(BG_IMAGE_NAME)).getWidth();
+    public static String bgImageName = "skyBox.png";
+    public static double scrollSpeed = 0.5;
+    private static final int PIC_WIDTH = (new GreenfootImage(bgImageName)).getWidth();
  
-    private GreenfootImage bgImage, bgBase;
-    private int scrollPosition = 0;
+    public static GreenfootImage bgImage, bgBase;
+    public static int scrollPosition = 1;
     
     private int LEVEL_WIDTH = 2000;
 
@@ -38,7 +38,7 @@ public class Level1 extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1200, 700, 1, false); 
-        setBackground(BG_IMAGE_NAME);
+        setBackground(bgImageName);
         bgImage = new GreenfootImage(getBackground());
         bgBase = new GreenfootImage(PIC_WIDTH, getHeight());
         bgBase.drawImage(bgImage, 0, 0);
@@ -76,14 +76,18 @@ public class Level1 extends World
         addObject(new Gem(), 975, 160);
         addObject(new Gem(), 1030, 160);
 
-        setPaintOrder(Player.class, Platform.class, Obstacle.class, Collectable.class,
-            Door.class,MoneyBox.class, MissileHill.class, HUD.class);
+        setPaintOrder(FlashBang.class, Explosion.class, Player.class, Platform.class, Obstacle.class, Collectable.class,
+            Door.class,MoneyBox.class,Smoke.class, Flag.class, FrontHole.class, LaunchNuke.class,BackHole.class, MissileHill.class, Nuke.class,  HUD.class);
         player.setLocation(96,627);
 
         Bomb bomb2 = new Bomb(1);
         addObject(bomb2,608,76);
-        MoneyBox moneyBox = new MoneyBox();
-        addObject(moneyBox,200,600);
+
+        addObject(new MoneyBox(),2000,600);
+        
+
+
+        bomb2.setLocation(697,164);
 
     }
     
@@ -108,10 +112,16 @@ public class Level1 extends World
     
     public void act()
     {
-        scrollPosition -= SCROLL_SPEED;
-        while(SCROLL_SPEED > 0 && scrollPosition < -PIC_WIDTH) scrollPosition += PIC_WIDTH;
-        while(SCROLL_SPEED < 0 && scrollPosition > 0) scrollPosition -= PIC_WIDTH;
+        double s = scrollSpeed;
+        if(scrollSpeed < 1) {
+            s = Math.random() < scrollSpeed ? 1: 0;
+        }
+        scrollPosition -= s;
+        while(s > 0 && scrollPosition < -PIC_WIDTH) scrollPosition += PIC_WIDTH;
+        while(s < 0 && scrollPosition > 0) scrollPosition -= PIC_WIDTH;
         paint(scrollPosition);
-        spawn();
+        if(!MoneyBox.hasBeenPressed) {
+            spawn();
+        }
     }
 }
