@@ -226,9 +226,15 @@ public class Player extends Actor
     }
     
     public void removeHealth() {
-        Greenfoot.playSound("hurt.mp3");
-        getWorld().removeObject(health[healthCount - 1]);
-        healthCount--;
+        if(Powerup.getCount() >= 1 ) {
+            getWorld().removeObject(powerup[Powerup.getCount() - 1]);
+            Powerup.setCount(Powerup.getCount()-1);
+        } else {
+            Greenfoot.playSound("hurt.mp3");
+            getWorld().removeObject(health[healthCount - 1]);
+            healthCount--;
+        }
+        
     }
     
     private void mirrorImages() {
