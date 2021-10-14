@@ -1,20 +1,16 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Level2 here.
+ * ----------
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Tommy M.
+ * @10/13
  */
 public class Level2 extends World
 {
 
-    /**
-     * Constructor for objects of class Level2.
-     * 
-     */
     private final float GRAVITY = 0.0667f;
-    private final GreenfootSound MUSIC = new GreenfootSound("zapsplat_024.mp3");
+    private final GreenfootSound MUSIC = new GreenfootSound("incompetech_tribal.mp3");
     private int SPEED = 3;
     private final float JUMP_FORCE = 5.6f;
     private int MAX_HEALTH = 3;
@@ -57,28 +53,27 @@ public class Level2 extends World
     {
 
         Player player = new Player(SPEED,JUMP_FORCE, GRAVITY, MAX_HEALTH, MAX_POWERUP, NEXT_LEVEL, MUSIC);
-        addObject(player,95,650);
+        addObject(player,95,600);
         Door door = new Door();
         addObject(door,1171, 44);
 
         addObject(new Floor(), 600, 675);
-        addObject(new BrickWall(), 380, 500);
+        addObject(new BrickWall(), 300, 500);
         addObject(new BrickWall(), 780, 300);
-        addObject(new BrickWall(), 960, 100);
+        addObject(new BrickWall(), 800, 100);
         addObject(new SmBrickWall(), 1120, 600);
-        addObject(new SmBrickWall(), 880, 600);
-        addObject(new SmBrickWall(), 420, 160);
-        addObject(new SmBrickWall(), 1000, 200);
+        addObject(new SmBrickWall(), 880, 900);
+        addObject(new SmBrickWall(), 600, 160);
+        addObject(new SmBrickWall(), 800, 200);
         addObject(new SmBrickWall(), 220, 280);
         addObject(new TrapDoor(GRAVITY), 60, 400);
         addObject(new TrapDoor(GRAVITY), 470, 160);
         addObject(new Bomb(GRAVITY), 1050, 765);
-        addObject(new Gem(), 975, 160);
+        addObject(new Gem(), 400, 160);
         addObject(new Gem(), 1030, 160);
 
-        setPaintOrder(Player.class, Platform.class, Obstacle.class, Collectable.class,
-            Door.class, HUD.class);
-        player.setLocation(96,627);
+        setPaintOrder(HUD.class, Player.class, Platform.class, Obstacle.class, Collectable.class,
+            Door.class);
 
         Bomb bomb2 = new Bomb(1);
         addObject(bomb2,608,76);

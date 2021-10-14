@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Rock here.
+ * ----------
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Tommy M.
+ * @10/13
  */
 public class Rock extends Obstacle
 {
@@ -48,7 +48,13 @@ public class Rock extends Obstacle
             if(player!=null&& !isCracking) {
                 frame = START_FRAME;
                 setLocation(getX(),getY()+7);
-                player.removeHealth();
+                if(Powerup.getCount() >= 1 ) {
+                    getWorld().removeObject(player.powerup[Powerup.getCount() - 1]);
+                    Powerup.setCount(Powerup.getCount()-1);
+                } else {
+                    player.removeHealth();
+                }
+                
                 
             }
             

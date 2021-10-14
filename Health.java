@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Health here.
+ * ----------
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Tommy M.
+ * @10/13
  */
 public class Health extends HUD
 {

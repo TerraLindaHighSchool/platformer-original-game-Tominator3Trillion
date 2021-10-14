@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class AcidRain here.
+ * ----------
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Tommy M.
+ * @10/13
  */
 public class AcidRain extends Obstacle
 {
@@ -45,7 +45,12 @@ public class AcidRain extends Obstacle
             //setImage(new GreenfootImage("acid_splash.png"));
             if(player!=null && !isSplashing) {
                 setLocation(getX(),getY()+5);
-                player.removeHealth();
+                if(Powerup.getCount() >= 1 ) {
+                    getWorld().removeObject(player.powerup[Powerup.getCount() - 1]);
+                    Powerup.setCount(Powerup.getCount()-1);
+                } else {
+                    player.removeHealth();
+                }
                 //System.out.println("movin");
                 
             }

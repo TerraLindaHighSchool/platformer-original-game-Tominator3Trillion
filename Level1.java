@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Level1 here.
+ * ----------
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Tommy M.
+ * @10/13
  */
 public class Level1 extends World
 {
@@ -17,7 +17,7 @@ public class Level1 extends World
     private final GreenfootSound MUSIC = new GreenfootSound("zapsplat_024.mp3");
     private int SPEED = 3;
     private final float JUMP_FORCE = 5.6f;
-    private int MAX_HEALTH = 10;
+    private int MAX_HEALTH = 3;
     private int MAX_POWERUP = 3;
     private Class NEXT_LEVEL = Level2.class;
     
@@ -57,7 +57,7 @@ public class Level1 extends World
     {
 
         Player player = new Player(SPEED,JUMP_FORCE, GRAVITY, MAX_HEALTH, MAX_POWERUP, NEXT_LEVEL, MUSIC);
-        addObject(player,95,650);
+        addObject(player,95,600);
         Door door = new Door();
         addObject(door,1171, 44);
 
@@ -76,14 +76,11 @@ public class Level1 extends World
         addObject(new Gem(), 975, 160);
         addObject(new Gem(), 1030, 160);
 
-        setPaintOrder(FlashBang.class, Explosion.class, Player.class, Platform.class, Obstacle.class, Collectable.class,
-            Door.class,MoneyBox.class,Smoke.class, Flag.class, FrontHole.class, LaunchNuke.class,BackHole.class, MissileHill.class, Nuke.class,  HUD.class);
-        player.setLocation(96,627);
+        setPaintOrder(HUD.class, Player.class, Platform.class, Obstacle.class, Collectable.class,
+            Door.class);
 
         Bomb bomb2 = new Bomb(1);
         addObject(bomb2,608,76);
-
-        addObject(new MoneyBox(),2000,600);
         
 
 
@@ -120,8 +117,6 @@ public class Level1 extends World
         while(s > 0 && scrollPosition < -PIC_WIDTH) scrollPosition += PIC_WIDTH;
         while(s < 0 && scrollPosition > 0) scrollPosition -= PIC_WIDTH;
         paint(scrollPosition);
-        if(!MoneyBox.hasBeenPressed) {
-            spawn();
-        }
+        spawn();
     }
 }

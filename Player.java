@@ -1,15 +1,15 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Player here.
+ * ----------
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Tommy M.
+ * @10/13
  */
 public class Player extends Actor
 {
     private Health[ ] health;
-    private Powerup[] powerup;
+    public Powerup[] powerup;
     private int healthCount;
     private int speed;
     private int walkIndex;
@@ -37,6 +37,8 @@ public class Player extends Actor
         
         healthCount = maxHealth;
         health = new Health[maxHealth];
+        powerup = new Powerup[maxPowerup];
+        
         STANDING_IMAGE = getImage();
         WALK_ANIMATION = new GreenfootImage[]
         { //new GreenfootImage("bob1.png"),
@@ -89,6 +91,12 @@ public class Player extends Actor
              health[i] = new Health();
              world.addObject(health[i], 30 + 42 * i, 36);
         }
+        for(int i = 0; i < powerup.length; i++)
+        {
+             powerup[i] = new Powerup();
+             world.addObject(powerup[i], world.getWidth() -( 30 + 42 * i), 36);
+        }
+        Powerup.setCount(powerup.length);
     }
     
     private void walk() {
@@ -102,7 +110,7 @@ public class Player extends Actor
         if(Greenfoot.isKeyDown("right")  && !Greenfoot.isKeyDown("left") ) {
             if(!MUSIC.isPlaying())
             {
-               //MUSIC.playLoop();
+               MUSIC.playLoop();
             }
             
             if(isFacingLeft) {
@@ -117,13 +125,9 @@ public class Player extends Actor
                 move(speed);
             }
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect || o instanceof Nuke)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD )) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        if(o instanceof MissileHill|| o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag ) {
-                            o.setLocation(o.getX()-(speed/3), o.getY());
-                        } else {
-                            o.setLocation(o.getX()-speed, o.getY());
-                        }
+                        o.setLocation(o.getX()-speed, o.getY());
                     }
                 }
             }
@@ -140,13 +144,9 @@ public class Player extends Actor
             }
             
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect|| o instanceof Nuke)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD )) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        if(o instanceof MissileHill|| o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag) {
-                            o.setLocation(o.getX()+(speed/3), o.getY());
-                        } else {
-                            o.setLocation(o.getX()+speed, o.getY());
-                        }
+                        o.setLocation(o.getX()+speed, o.getY());
                     }
                 }
             }
@@ -187,6 +187,7 @@ public class Player extends Actor
         {
             MUSIC.stop();
             World world = null;
+            Greenfoot.playSound("door_open.wav");
             try 
             {
                 world = (World) NEXT_LEVEL.newInstance();
@@ -199,8 +200,22 @@ public class Player extends Actor
             } 
             Greenfoot.setWorld(world);
         }
+        if(isTouching(Gem.class) && Powerup.getCount() < powerup.length) {
+            Powerup.setCount(Powerup.getCount()+1);
+            powerup[Powerup.getCount()-1] = new Powerup();
+            getWorld().addObject(powerup[Powerup.getCount()-1], getWorld().getWidth() -( 30 + 42 * (Powerup.getCount()-1)), 36);
+
+            Greenfoot.playSound("collectable.wav");
+            getWorld().removeObject(getOneIntersectingObject(Gem.class));
+        }
         if(isTouching(Obstacle.class) && !isTouching(AcidRain.class) && !isTouching(Rock.class)) {
-            removeHealth();
+            if(Powerup.getCount() >= 1 ) {
+                getWorld().removeObject(powerup[Powerup.getCount() - 1]);
+                Powerup.setCount(Powerup.getCount()-1);
+            } else {
+
+                removeHealth();
+            }
             getWorld().removeObject(getOneIntersectingObject(Obstacle.class));
         }
         
@@ -211,6 +226,7 @@ public class Player extends Actor
     }
     
     public void removeHealth() {
+        Greenfoot.playSound("hurt.mp3");
         getWorld().removeObject(health[healthCount - 1]);
         healthCount--;
     }
