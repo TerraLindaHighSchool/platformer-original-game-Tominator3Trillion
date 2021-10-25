@@ -65,7 +65,7 @@ public class Level1 extends World
         Floor floor = new Floor("floor_grass.png");
         addObject(floor,600,680);
 
-         OutsideBuilding outsideBuilding = new OutsideBuilding();
+        OutsideBuilding outsideBuilding = new OutsideBuilding();
         addObject(outsideBuilding,3746,155);
 
         TallWall tallWall = new TallWall();

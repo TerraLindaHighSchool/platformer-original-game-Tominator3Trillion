@@ -35,10 +35,10 @@ public class Nuke extends Actor
             getWorld().addObject(new FlashBang(getWorld()),getWorld().getWidth()/2,getWorld().getHeight()/2);
             
             getWorld().setBackground("nukeBackground.png");
-            Level1.bgImage= new GreenfootImage("nukeBackground.png");
-            Level1.bgBase= new GreenfootImage("nukeBackground.png");
-            Level1.scrollSpeed = 0;
-            Level1.scrollPosition = 1;
+            Level5.bgImage= new GreenfootImage("nukeBackground.png");
+            Level5.bgBase= new GreenfootImage("nukeBackground.png");
+            Level5.scrollSpeed = 0;
+            Level5.scrollPosition = 1;
             
             
             MissileHill mh = (MissileHill)getOneIntersectingObject(MissileHill.class);

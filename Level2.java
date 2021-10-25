@@ -142,7 +142,6 @@ public class Level2 extends World
         if(scrollSpeed < 1f) {
             s = scrollFrame % (1f/ scrollSpeed)<=0.1f  ? 1: 0;
         }
-        System.out.println(s);
         if(isNegative) {
             scrollPosition += s;
         } else {

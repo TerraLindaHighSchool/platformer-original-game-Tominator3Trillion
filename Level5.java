@@ -61,18 +61,20 @@ public class Level5 extends World
     {
 
         Player player = new Player(SPEED,JUMP_FORCE, GRAVITY, MAX_HEALTH, MAX_POWERUP, NEXT_LEVEL, MUSIC);
-        addObject(player,95,600);
+        addObject(player,150,600);
         Floor floor = new Floor("floor_grass.png");
         addObject(floor,600,680);
+        
+        OutsideBuilding outsideBuilding = new OutsideBuilding();
+        addObject(outsideBuilding,-400,155);
+
 
         MoneyBox moneyBox = new MoneyBox();
-        addObject(moneyBox,4000,550);
+        addObject(moneyBox,4000,625);
 
         TallWall tallWall = new TallWall();
         addObject(tallWall,1076,415);
         
-        TallWall tallWall2 = new TallWall();
-        addObject(tallWall2,-150,415);
 
         SmBrickWall smBrickWall = new SmBrickWall();
         addObject(smBrickWall,1500,300);
