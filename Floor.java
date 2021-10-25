@@ -1,25 +1,28 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * ----------
+ * Write a description of class Floor here.
  * 
- * @Tommy M.
- * @10/13
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class Floor extends Platform
 {
  
     
-    private static final String bgImageName = "floor_grass.png";
+    private static String bgImageName;
     //private static final double scrollSpeed = 2.5;
-    private static final int picWidth = (new GreenfootImage(bgImageName)).getWidth();
+    private static int picWidth;
  
     private GreenfootImage bgImage, bgBase;
     public int scrollPosition = 0;
      
-    public Floor()
+    public Floor(String im)
     {    
         //super(800, 400, 1);
+        
+        bgImageName = im;
+        picWidth = (new GreenfootImage(bgImageName)).getWidth();
         setImage(bgImageName);
         bgImage = new GreenfootImage(getImage());
         bgBase = new GreenfootImage(picWidth, getImage().getHeight());

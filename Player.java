@@ -1,15 +1,15 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * ----------
+ * Write a description of class Player here.
  * 
- * @Tommy M.
- * @10/13
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class Player extends Actor
 {
     private Health[ ] health;
-    public Powerup[] powerup;
+    private Powerup[] powerup;
     private int healthCount;
     private int speed;
     private int walkIndex;
@@ -24,6 +24,7 @@ public class Player extends Actor
     private final float GRAVITY;
     private final Class NEXT_LEVEL;    
     private final GreenfootSound MUSIC;
+    private final GreenfootSound JUMP = new GreenfootSound("jump.mp3");
     
     public Player(int speed, float jumpForce, float gravity,
     int maxHealth, int maxPowerup, Class nextLevel, GreenfootSound music)
@@ -34,6 +35,7 @@ public class Player extends Actor
         GRAVITY = gravity;
         NEXT_LEVEL = nextLevel;
         MUSIC = music;
+        JUMP.setVolume(50);
         
         healthCount = maxHealth;
         health = new Health[maxHealth];
@@ -100,6 +102,7 @@ public class Player extends Actor
     }
     
     private void walk() {
+        boolean isTouchingWall=true;
         if(isWalking) {
             animator();
         } else {
@@ -107,17 +110,18 @@ public class Player extends Actor
             walkIndex = 0;
         }
         
-        if(Greenfoot.isKeyDown("right")  && !Greenfoot.isKeyDown("left") ) {
-            if(!MUSIC.isPlaying())
-            {
-               MUSIC.playLoop();
-            }
+        if(Greenfoot.isKeyDown("right")  && !Greenfoot.isKeyDown("left") && (getOneObjectAtOffset(getImage().getWidth()/2,0, Platform.class)==null||isTouching(Phasable.class))) {
             
             if(isFacingLeft) {
                 mirrorImages();
             }
+            isTouchingWall=false;
             isWalking = true;
             isFacingLeft = false;
+            
+            if(getX() < getWorld().getWidth()/2 && getX()+speed > getWorld().getWidth()/2) {
+                setLocation(getWorld().getWidth()/2, getY());
+            }
             
             //move(speed);
             if(getX() != (int)(getWorld().getWidth()/2)&& getX() < getWorld().getWidth()) {
@@ -125,35 +129,56 @@ public class Player extends Actor
                 move(speed);
             }
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD )) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect || o instanceof Nuke)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        o.setLocation(o.getX()-speed, o.getY());
+                        if(o instanceof MissileHill|| o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag ) {
+                            o.setLocation(o.getX()-(speed/3), o.getY());
+                        } else {
+                            o.setLocation(o.getX()-speed, o.getY());
+                        }
                     }
                 }
             }
-        }if(Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right") ) {
+        }if(Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right") && (getOneObjectAtOffset(-(getImage().getWidth()/2),0, Platform.class)==null||isTouching(Phasable.class))) {
             if(!isFacingLeft) {
                 mirrorImages();
             }
+            isTouchingWall=false;
             isWalking = true;
             isFacingLeft = true;
             //move(-speed);
+            if(getX() > getWorld().getWidth()/2 && getX()-speed < getWorld().getWidth()/2) {
+                setLocation(getWorld().getWidth()/2, getY());
+            }
             if(getX() != (int)(getWorld().getWidth()/2) && getX() > 0) {
                 //setLocation(getX()-speed, getY());
                 move(-speed);
             }
             
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD )) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect|| o instanceof Nuke)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        o.setLocation(o.getX()+speed, o.getY());
+                        if(o instanceof MissileHill|| o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag) {
+                            o.setLocation(o.getX()+(speed/3), o.getY());
+                        } else {
+                            o.setLocation(o.getX()+speed, o.getY());
+                        }
                     }
                 }
             }
         }
-        if(isWalking  && getX() == (int)(getWorld().getWidth()/2)) {
+        if(isWalking  && !isTouchingWall && getX() == (int)(getWorld().getWidth()/2)) {
             Floor f = getWorld().getObjects(Floor.class).get(0);
             f.scroll(isFacingLeft ? -speed : speed);
+            
+            if(getWorld() instanceof Level2) {
+                ((Level2)getWorld()).scroll(isFacingLeft ? (-speed)/5f : speed/5f);
+            }else if(getWorld() instanceof Level3) {
+                ((Level3)getWorld()).scroll(isFacingLeft ? (-speed)/5f : speed/5f);
+            }else if(getWorld() instanceof Level4) {
+                ((Level4)getWorld()).scroll(isFacingLeft ? (-speed)/5f : speed/5f);
+            }
+                
         }
         
         if(!(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("right")) || (Greenfoot.isKeyDown("left") && Greenfoot.isKeyDown("right")))
@@ -162,11 +187,11 @@ public class Player extends Actor
         }
     }
     private void jump() {
-        if(Greenfoot.isKeyDown("space") && isOnGround()) 
+        if(Greenfoot.isKeyDown("space") && isOnGround() && !touchingRoof()) 
         {
             yVelocity = JUMP_FORCE;
             isJumping = true;
-            Greenfoot.playSound("jump.mp3");
+            JUMP.play();
         }
         if(isJumping && yVelocity > 0) {
             setLocation(getX(), getY() - (int) yVelocity);
@@ -176,7 +201,7 @@ public class Player extends Actor
         }
     }
     private void fall() {
-        if(!isJumping && !isOnGround()) {
+        if(!isJumping && (!isOnGround() || (touchingRoof() &&getIntersectingObjects(Platform.class).size()<2))) {
             setLocation(getX(), getY() - (int) yVelocity);
             yVelocity -= GRAVITY;
         }
@@ -185,9 +210,9 @@ public class Player extends Actor
     {
         if(isTouching(Door.class))
         {
-            MUSIC.stop();
-            World world = null;
+            //MUSIC.stop();
             Greenfoot.playSound("door_open.wav");
+            World world = null;
             try 
             {
                 world = (World) NEXT_LEVEL.newInstance();
@@ -209,17 +234,14 @@ public class Player extends Actor
             getWorld().removeObject(getOneIntersectingObject(Gem.class));
         }
         if(isTouching(Obstacle.class) && !isTouching(AcidRain.class) && !isTouching(Rock.class)) {
-            if(Powerup.getCount() >= 1 ) {
-                getWorld().removeObject(powerup[Powerup.getCount() - 1]);
-                Powerup.setCount(Powerup.getCount()-1);
-            } else {
-
-                removeHealth();
-            }
+            removeHealth();
             getWorld().removeObject(getOneIntersectingObject(Obstacle.class));
         }
+        if(isTouching(AcidPool.class)) {
+            removeHealth();
+        }
         
-        if(isTouching(Platform.class)) {
+        if(isTouching(Platform.class) || (getY() + getImage().getHeight()/4) <=0) {
             yVelocity=-1;
             fall();
         }
@@ -234,7 +256,6 @@ public class Player extends Actor
             getWorld().removeObject(health[healthCount - 1]);
             healthCount--;
         }
-        
     }
     
     private void mirrorImages() {
@@ -247,13 +268,18 @@ public class Player extends Actor
     {
         if(healthCount == 0)
         {
-            MUSIC.stop();
+            //MUSIC.stop();
             Greenfoot.setWorld(new Level1());
         }
     }
     private boolean isOnGround() {
         Actor ground = getOneObjectAtOffset(0,getImage().getHeight()/2, Platform.class);
         
-        return ground != null;
+        return ground != null || isTouching(Floor.class);
+    }
+    private boolean touchingRoof() {
+        Actor ceiling = getOneObjectAtOffset(0,-(getImage().getHeight()/2), Platform.class);
+        
+        return ceiling != null;
     }
 }

@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * ----------
+ * Write a description of class Powerup here.
  * 
- * @Tommy M.
- * @10/13
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class Powerup extends HUD
 {

@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * ----------
+ * Write a description of class AcidRain here.
  * 
- * @Tommy M.
- * @10/13
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class AcidRain extends Obstacle
 {
@@ -26,6 +26,7 @@ public class AcidRain extends Obstacle
     public AcidRain(float gravity) {
         GRAVITY = gravity;
         RAIN_PIC= getImage();
+        RAIN_SPLAT.setVolume(80);
         
         SPLASH_ANIMATION = new GreenfootImage[]
         { //new GreenfootImage("bob1.png"),
@@ -40,17 +41,14 @@ public class AcidRain extends Obstacle
     public void act()
     {
         
+        
+
         Player player = (Player)getOneObjectAtOffset(0,getImage().getHeight()/2, Player.class);
         if(isOnFloor() || player!=null) {
             //setImage(new GreenfootImage("acid_splash.png"));
             if(player!=null && !isSplashing) {
                 setLocation(getX(),getY()+5);
-                if(Powerup.getCount() >= 1 ) {
-                    getWorld().removeObject(player.powerup[Powerup.getCount() - 1]);
-                    Powerup.setCount(Powerup.getCount()-1);
-                } else {
-                    player.removeHealth();
-                }
+                player.removeHealth();
                 //System.out.println("movin");
                 
             }
@@ -77,7 +75,17 @@ public class AcidRain extends Obstacle
                 }
             }
             frame++;
+        } else {
+            if(getOneObjectAtOffset(0,-25, AcidPool.class)!=null) {
+                Greenfoot.playSound("acidSplash.wav");
+                isDeleted=true;
+                getWorld().removeObject(this);
+            }
         }
+        
+        
+        
+        
     }
     
     

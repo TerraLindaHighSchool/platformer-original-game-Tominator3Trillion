@@ -1,29 +1,32 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * ----------
+ * Write a description of class Level2 here.
  * 
- * @Tommy M.
- * @10/13
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class Level2 extends World
 {
 
+    /**
+     * Constructor for objects of class Level1.
+     * 
+     */
     private final float GRAVITY = 0.0667f;
-    private final GreenfootSound MUSIC = new GreenfootSound("incompetech_tribal.mp3");
+    private final GreenfootSound MUSIC = null;
     private int SPEED = 3;
     private final float JUMP_FORCE = 5.6f;
-    private int MAX_HEALTH = 3;
+    private int MAX_HEALTH = 10;
     private int MAX_POWERUP = 3;
-    private Class NEXT_LEVEL = WinSplash.class;
+    private Class NEXT_LEVEL = Level3.class;
     
     
-    private static final String BG_IMAGE_NAME = "skyBox.png";
-    private static final double SCROLL_SPEED = 1.25;
-    private static final int PIC_WIDTH = (new GreenfootImage(BG_IMAGE_NAME)).getWidth();
- 
-    private GreenfootImage bgImage, bgBase;
-    private int scrollPosition = 0;
+    public static String bgImageName;
+    private int scrollFrame = 0;
+    private static int PIC_WIDTH;
+    public static GreenfootImage bgImage, bgBase;
+    public static int scrollPosition;
     
     private int LEVEL_WIDTH = 2000;
 
@@ -34,9 +37,12 @@ public class Level2 extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1200, 700, 1, false); 
-        setBackground(BG_IMAGE_NAME);
+        bgImageName = "indoor1.png";
+        PIC_WIDTH = (new GreenfootImage(bgImageName)).getWidth();
+        setBackground(bgImageName);
         bgImage = new GreenfootImage(getBackground());
         bgBase = new GreenfootImage(PIC_WIDTH, getHeight());
+        scrollPosition = 1;
         bgBase.drawImage(bgImage, 0, 0);
         prepare();
     }
@@ -54,29 +60,59 @@ public class Level2 extends World
 
         Player player = new Player(SPEED,JUMP_FORCE, GRAVITY, MAX_HEALTH, MAX_POWERUP, NEXT_LEVEL, MUSIC);
         addObject(player,95,600);
+        Floor floor = new Floor("floor_metal.png");
+        addObject(floor,600,680);
+
+
+        OutsideBuilding outsideBuilding = new OutsideBuilding();
+        addObject(outsideBuilding,3746,155);
+
+        TallWall tallWall = new TallWall();
+        addObject(tallWall,1076,415);
+        
+        TallWall tallWall2 = new TallWall();
+        addObject(tallWall2,-150,415);
+
+        SmBrickWall smBrickWall = new SmBrickWall();
+        addObject(smBrickWall,1500,300);
+
+        SmBrickWall smBrickWall2 = new SmBrickWall();
+        addObject(smBrickWall2,400,325);
+
+        BrickWall brickWall = new BrickWall();
+        addObject(brickWall,820,464);
+
+        SmBrickWall smBrickWall3 = new SmBrickWall();
+        addObject(smBrickWall3,400,569);
+
+        SmBrickWall smBrickWall4 = new SmBrickWall();
+        addObject(smBrickWall4,900,230);
+
+        SmallBuilding smallBuilding = new SmallBuilding();
+        addObject(smallBuilding,2052,415);
+
+        SmallBuilding smallBuilding2 = new SmallBuilding();
+        addObject(smallBuilding2,2836,415);
+
+        BrickWall brickWall2 = new BrickWall();
+        addObject(brickWall2,2454,160);
+
         Door door = new Door();
-        addObject(door,1171, 44);
+        addObject(door,3270,613);
 
-        addObject(new Floor(), 600, 675);
-        addObject(new BrickWall(), 300, 500);
-        addObject(new BrickWall(), 780, 300);
-        addObject(new BrickWall(), 800, 100);
-        addObject(new SmBrickWall(), 1120, 600);
-        addObject(new SmBrickWall(), 880, 900);
-        addObject(new SmBrickWall(), 600, 160);
-        addObject(new SmBrickWall(), 800, 200);
-        addObject(new SmBrickWall(), 220, 280);
-        addObject(new TrapDoor(GRAVITY), 60, 400);
-        addObject(new TrapDoor(GRAVITY), 470, 160);
-        addObject(new Bomb(GRAVITY), 1050, 765);
-        addObject(new Gem(), 400, 160);
-        addObject(new Gem(), 1030, 160);
+        AcidPool acidPool = new AcidPool();
+        addObject(acidPool,2442,565);
+        
+        Phasable phasable = new Phasable();
+        addObject(phasable,1075,607);
 
-        setPaintOrder(HUD.class, Player.class, Platform.class, Obstacle.class, Collectable.class,
-            Door.class);
+        setPaintOrder(FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
+        ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);
+        //player.setLocation(96,627);
 
-        Bomb bomb2 = new Bomb(1);
-        addObject(bomb2,608,76);
+
+        //addObject(new MoneyBox(),2000,600);
+
     }
     
      private void spawn()
@@ -98,12 +134,33 @@ public class Level2 extends World
         bg.drawImage(bgImage, position + PIC_WIDTH, 0);
     }
     
+    public void scroll(double scrollSpeed)
+    {
+        boolean isNegative = Math.abs(scrollSpeed)!=scrollSpeed;
+        scrollSpeed=Math.abs(scrollSpeed);
+        double s = scrollSpeed;
+        if(scrollSpeed < 1f) {
+            s = scrollFrame % (1f/ scrollSpeed)<=0.1f  ? 1: 0;
+        }
+        System.out.println(s);
+        if(isNegative) {
+            scrollPosition += s;
+        } else {
+            scrollPosition -= s;
+        }
+        
+        
+        while(s > 0 && scrollPosition < -PIC_WIDTH) scrollPosition += PIC_WIDTH;
+        while(s < 0 && scrollPosition > 0) scrollPosition -= PIC_WIDTH;
+        paint(scrollPosition);
+        
+    }
+    
     public void act()
     {
-        scrollPosition -= SCROLL_SPEED;
-        while(SCROLL_SPEED > 0 && scrollPosition < -PIC_WIDTH) scrollPosition += PIC_WIDTH;
-        while(SCROLL_SPEED < 0 && scrollPosition > 0) scrollPosition -= PIC_WIDTH;
-        paint(scrollPosition);
-        spawn();
+        if(!MoneyBox.hasBeenPressed) {
+            spawn();
+        }
+        scrollFrame++;
     }
 }
