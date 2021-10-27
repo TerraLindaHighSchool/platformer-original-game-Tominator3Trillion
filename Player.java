@@ -129,10 +129,10 @@ public class Player extends Actor
                 move(speed);
             }
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect || o instanceof Nuke)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect || o instanceof Nuke||o instanceof CloseBackground)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        if(o instanceof MissileHill|| o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag ) {
-                            o.setLocation(o.getX()-(speed/3), o.getY());
+                        if(o instanceof MissileHill||o instanceof FakeHill || o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag ) {
+                            o.setLocation(o.getX()-(frame%2==0?1:0), o.getY());
                         } else {
                             o.setLocation(o.getX()-speed, o.getY());
                         }
@@ -156,10 +156,10 @@ public class Player extends Actor
             }
             
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect|| o instanceof Nuke)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect|| o instanceof Nuke||o instanceof CloseBackground)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
-                        if(o instanceof MissileHill|| o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag) {
-                            o.setLocation(o.getX()+(speed/3), o.getY());
+                        if(o instanceof MissileHill|| o instanceof FakeHill || o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag) {
+                            o.setLocation(o.getX()+(frame%2==0?1:0), o.getY());
                         } else {
                             o.setLocation(o.getX()+speed, o.getY());
                         }
@@ -170,6 +170,9 @@ public class Player extends Actor
         if(isWalking  && !isTouchingWall && getX() == (int)(getWorld().getWidth()/2)) {
             Floor f = getWorld().getObjects(Floor.class).get(0);
             f.scroll(isFacingLeft ? -speed : speed);
+            for(CloseBackground cb : getWorld().getObjects(CloseBackground.class)) {
+                cb.scroll(isFacingLeft ? -1 : 1);
+            }
             
             if(getWorld() instanceof Level2) {
                 ((Level2)getWorld()).scroll(isFacingLeft ? (-speed)/5f : speed/5f);

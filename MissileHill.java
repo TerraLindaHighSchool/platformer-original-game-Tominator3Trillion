@@ -10,6 +10,7 @@ public class MissileHill extends Actor
     int frame = 0;
     int f = 0;
     int launchFrame = 0;
+    int destinationDelay = 0;
     int targetDestination;
     Random rand = new Random();
     
@@ -38,17 +39,19 @@ public class MissileHill extends Actor
             getWorld().addObject(bh,getX()+15, getY()+20);
             Greenfoot.playSound("groundShake.mp3");
             Greenfoot.playSound("risingNoise.mp3");
+            getWorld().addObject(new CinematicBar(true),600, -200);
+            getWorld().addObject(new CinematicBar(false), 600, 900);
             //Greenfoot.playSound("buttonStartup.mp3");
         }
         if(frame==245) {
-            Greenfoot.playSound("mechanicSound1.mp3");
+            //Greenfoot.playSound("mechanicSound1.mp3");
         }
-        if(frame==1200) {
+        if(frame==1300) {
             siren.play();
         }
         
         if(getY() > targetDestination) {
-            if(frame%5==0) {
+            if(frame%4==0) {
                 setLocation(getX(),getY() - 1);
                 fh.setLocation(fh.getX(),fh.getY() - 1);
                 bh.setLocation(bh.getX(),bh.getY() - 1);
@@ -58,6 +61,9 @@ public class MissileHill extends Actor
             atDestination = true;
         }
         if(atDestination) {
+            destinationDelay++;
+        }
+        if(atDestination && destinationDelay > 170) {
             launchFrame++;
         }
         if(launchFrame == 1) {
@@ -66,10 +72,13 @@ public class MissileHill extends Actor
         if(launchFrame == 100) {
             //Greenfoot.playSound("risingNoise.mp3");
         }
-        if(launchFrame < 475 && launchFrame > 160) {
+        if(launchFrame < 400 && launchFrame > 100) {
             int hillShake = rand.nextInt(3)-1;
             int groundShake = rand.nextInt(7)-3;
             for(Actor o : getWorld().getObjects(Actor.class)) {
+                if(o instanceof CinematicBar) {
+                    continue;
+                }
                  if(o instanceof Floor) {
                     ((Floor)o).scroll(-groundShake);
                 } else 
@@ -83,7 +92,7 @@ public class MissileHill extends Actor
                 }
             }
         }
-        if(launchFrame == 300) {
+        if(launchFrame == 200) {
             getWorld().addObject(new LaunchNuke(),bh.getX(), bh.getY()+55);
         }
         

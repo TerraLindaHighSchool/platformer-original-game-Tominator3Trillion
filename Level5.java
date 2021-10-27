@@ -108,7 +108,7 @@ public class Level5 extends World
         Phasable phasable = new Phasable();
         addObject(phasable,1075,607);
 
-        setPaintOrder(FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
+        setPaintOrder(FlashBang.class, Explosion.class, CinematicBar.class, HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
         ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);
         //player.setLocation(96,627);
 

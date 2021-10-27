@@ -62,7 +62,14 @@ public class Level4 extends World
         addObject(player,95,600);
         Floor floor = new Floor("floor_metal.png");
         addObject(floor,600,680);
-
+        
+        FakeHill fh = new FakeHill();
+        addObject(fh,1000,500);
+        
+        CloseBackground cb = new CloseBackground("windowWall.png", 2f);
+        addObject(cb,1000,350);
+        
+        
 
         OutsideBuilding outsideBuilding = new OutsideBuilding();
         addObject(outsideBuilding,3746,155);
@@ -142,7 +149,7 @@ public class Level4 extends World
         if(scrollSpeed < 1f) {
             s = scrollFrame % (1f/ scrollSpeed)<=0.1f  ? 1: 0;
         }
-        System.out.println(s);
+
         if(isNegative) {
             scrollPosition += s;
         } else {

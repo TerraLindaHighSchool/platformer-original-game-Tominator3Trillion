@@ -62,10 +62,11 @@ public class Level3 extends World
         addObject(player,95,600);
         Floor floor = new Floor("floor_metal.png");
         addObject(floor,600,680);
-
+        CloseBackground cb = new CloseBackground("coalPiles.png", 3f);
+        addObject(cb,2000,450);
 
         OutsideBuilding outsideBuilding = new OutsideBuilding();
-        addObject(outsideBuilding,3746,155);
+        addObject(outsideBuilding,5000,155);
 
         TallWall tallWall = new TallWall();
         addObject(tallWall,1076,415);
@@ -98,7 +99,7 @@ public class Level3 extends World
         addObject(brickWall2,2454,160);
 
         Door door = new Door();
-        addObject(door,3270,613);
+        addObject(door,4500,613);
 
         AcidPool acidPool = new AcidPool();
         addObject(acidPool,2442,565);
@@ -132,6 +133,7 @@ public class Level3 extends World
         GreenfootImage bg = getBackground();
         bg.drawImage(bgBase, position, 0);
         bg.drawImage(bgImage, position + PIC_WIDTH, 0);
+        bg.drawImage(bgImage, position - PIC_WIDTH, 0);
     }
     
     public void scroll(double scrollSpeed)
@@ -142,7 +144,6 @@ public class Level3 extends World
         if(scrollSpeed < 1f) {
             s = scrollFrame % (1f/ scrollSpeed)<=0.1f  ? 1: 0;
         }
-        System.out.println(s);
         if(isNegative) {
             scrollPosition += s;
         } else {

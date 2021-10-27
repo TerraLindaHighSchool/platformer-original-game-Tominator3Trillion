@@ -62,6 +62,9 @@ public class Level2 extends World
         addObject(player,95,600);
         Floor floor = new Floor("floor_metal.png");
         addObject(floor,600,680);
+        
+        CloseBackground cb = new CloseBackground("longFence.png", 3f);
+        addObject(cb,1000,450);
 
 
         OutsideBuilding outsideBuilding = new OutsideBuilding();
@@ -132,6 +135,7 @@ public class Level2 extends World
         GreenfootImage bg = getBackground();
         bg.drawImage(bgBase, position, 0);
         bg.drawImage(bgImage, position + PIC_WIDTH, 0);
+        bg.drawImage(bgImage, position - PIC_WIDTH, 0);
     }
     
     public void scroll(double scrollSpeed)
