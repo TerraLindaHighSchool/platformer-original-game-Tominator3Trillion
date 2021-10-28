@@ -1,11 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
 /**
- * Write a description of class MissileHill here.
+ * Write a description of class FailHill here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class MissileHill extends Actor
+public class FailHill extends MissileHill
 {
     int frame = 0;
     int f = 0;
@@ -21,11 +22,11 @@ public class MissileHill extends Actor
     public FrontHole fh;
     public BackHole bh;
     
-    GreenfootSound siren = new GreenfootSound("sirenExplosion.mp3");
-    GreenfootSound launchStartup = new GreenfootSound("launchStartup.mp3");
+    GreenfootSound ringEar = new GreenfootSound("ringingEar.mp3");
+    GreenfootSound launchStartup = new GreenfootSound("winDetonation.mp3");
     
 
-    public MissileHill() {
+    public FailHill() {
         launchStartup.setVolume(100);
     }
     
@@ -52,15 +53,13 @@ public class MissileHill extends Actor
         
         if(frame>=200 && frame<=455) {
             for(Actor a : getWorld().getObjects(Actor.class)) {
-                if(a instanceof Player || a instanceof HUD|| a instanceof Platform|| a instanceof DontPressSign|| a instanceof PressM || a instanceof MegaPhone || a instanceof Obstacle || a instanceof MoneyBox) {
+                if(a instanceof Player || a instanceof Platform ||a instanceof HUD|| a instanceof MegaPhone || a instanceof Obstacle || a instanceof SelfDestructionBox) {
                     a.getImage().setTransparency(255-(frame-200));
                 }
             }
         }
         
-        if(frame==1490) {
-            siren.play();
-        }
+
         
         if(getY() > targetDestination) {
             if(frame%5==0) {
@@ -84,11 +83,11 @@ public class MissileHill extends Actor
         if(launchFrame == 100) {
             //Greenfoot.playSound("risingNoise.mp3");
         }
-        if(launchFrame < 500 && launchFrame > 200) {
-            int hillShake = rand.nextInt(3)-1;
-            int groundShake = rand.nextInt(7)-3;
+        if(launchFrame > 340 && launchFrame < 1200) {
+            int hillShake = rand.nextInt(7)-3;
+            int groundShake = rand.nextInt(9)-4;
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(o instanceof CinematicBar || o instanceof CloseBackground) {
+                if(o instanceof CinematicBar|| o instanceof CloseBackground) {
                     continue;
                 }
                  if(o instanceof Floor) {
@@ -104,8 +103,10 @@ public class MissileHill extends Actor
                 }
             }
         }
-        if(launchFrame == 387) {
-            getWorld().addObject(new LaunchNuke(),bh.getX(), bh.getY()+55);
+        if(launchFrame == 1008) {
+            getWorld().addObject(new FlashBang(getWorld(),100),getWorld().getWidth()/2,getWorld().getHeight()/2);
+            ringEar.play();
+            Greenfoot.setWorld(new Level6());
         }
         
         if(bombDetonated && f == 0) {

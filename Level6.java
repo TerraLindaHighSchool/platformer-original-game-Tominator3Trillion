@@ -1,16 +1,16 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Level5 here.
+ * Write a description of class Level6 here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Level5 extends World
+public class Level6 extends World
 {
 
     /**
-     * Constructor for objects of class Level5.
+     * Constructor for objects of class Level6.
      * 
      */
     private final float GRAVITY = 0.0667f;
@@ -30,19 +30,17 @@ public class Level5 extends World
     public static int scrollPosition;
     
     private int LEVEL_WIDTH = 2000;
-    
-    private MegaPhone megaPhone;
 
      
     
     
-    public Level5()
+    public Level6()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1200, 700, 1, false); 
         bgImageName = "skyBox1.png";
         PIC_WIDTH = (new GreenfootImage(bgImageName)).getWidth();
-        scrollSpeed = 0.1f;
+        scrollSpeed = 0.5;
         setBackground(bgImageName);
         bgImage = new GreenfootImage(getBackground());
         bgBase = new GreenfootImage(PIC_WIDTH, getHeight());
@@ -63,82 +61,21 @@ public class Level5 extends World
     {
 
         Player player = new Player(SPEED,JUMP_FORCE, GRAVITY, MAX_HEALTH, MAX_POWERUP, NEXT_LEVEL, MUSIC);
-        addObject(player,150,600);
+        addObject(player,95,600);
         Floor floor = new Floor("floor_grass.png");
         addObject(floor,600,680);
         
         CloseBackground cb = new CloseBackground("city.png", 0.25f);
         addObject(cb,1500,305);
-        
-        SmallBuilding outsideBuilding = new SmallBuilding();
-        addObject(outsideBuilding,-200,415);
-        
+
+        addObject(new FlashBang(this, 9),getWidth()/2,getHeight()/2);
 
 
-        TallWall tw = new TallWall();
-        addObject(tw, 23,-20);
-
-        DontPressSign dps = new DontPressSign();
-        addObject(dps,4000,410);
-        
-        PressM pm = new PressM();
-        addObject(pm,3600,300);
-        
-        MoneyBox moneyBox = new MoneyBox();
-        addObject(moneyBox,4000,605);
-        
-        SelfDestructionBox selfDestructionBox = new SelfDestructionBox();
-        addObject(selfDestructionBox,-1000,605);
-
-        TallWall tallWall = new TallWall();
-        addObject(tallWall,1076,415);
-        
-
-        SmBrickWall smBrickWall = new SmBrickWall();
-        addObject(smBrickWall,1500,300);
-
-        SmBrickWall smBrickWall2 = new SmBrickWall();
-        addObject(smBrickWall2,400,325);
-
-        BrickWall brickWall = new BrickWall();
-        addObject(brickWall,820,464);
-
-        SmBrickWall smBrickWall3 = new SmBrickWall();
-        addObject(smBrickWall3,400,569);
-
-        SmBrickWall smBrickWall4 = new SmBrickWall();
-        addObject(smBrickWall4,900,230);
-
-        SmallBuilding smallBuilding = new SmallBuilding();
-        addObject(smallBuilding,2052,415);
-
-        SmallBuilding smallBuilding2 = new SmallBuilding();
-        addObject(smallBuilding2,2836,415);
-
-        BrickWall brickWall2 = new BrickWall();
-        addObject(brickWall2,2454,160);
-
-
-
-        AcidPool acidPool = new AcidPool();
-        addObject(acidPool,2442,565);
-        
-        Phasable phasable = new Phasable();
-        addObject(phasable,1075,607);
-        
-        Phasable phasable2 = new Phasable();
-        addObject(phasable2,23,200);
-        
-        megaPhone = new MegaPhone(new GreenfootSound("speechNoTime.mp3"));
-        addObject(megaPhone,60,300);
-        
-        setPaintOrder(FlashBang.class, Explosion.class, CinematicBar.class, HUD.class, Player.class,Door.class, SelfDestructionBox.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
+        setPaintOrder(FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
         ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);
         //player.setLocation(96,627);
 
         //addObject(new MoneyBox(),2000,600);
-        megaPhone.play();
-        
         
     }
     
@@ -163,20 +100,11 @@ public class Level5 extends World
     
     public void act()
     {
-        boolean isNegative = Math.abs(scrollSpeed)!=scrollSpeed;
-        scrollSpeed=Math.abs(scrollSpeed);
         double s = scrollSpeed;
-        if(scrollSpeed < 1f) {
-            s = scrollFrame % (1f/ scrollSpeed)<=0.1f  ? 1: 0;
+        if(scrollSpeed < 1) {
+            s = scrollFrame % (1f/ scrollSpeed)==0  ? 1: 0;
         }
-
-        if(isNegative) {
-            scrollPosition += s;
-        } else {
-            scrollPosition -= s;
-        }
-        
-        
+        scrollPosition -= s;
         while(s > 0 && scrollPosition < -PIC_WIDTH) scrollPosition += PIC_WIDTH;
         while(s < 0 && scrollPosition > 0) scrollPosition -= PIC_WIDTH;
         paint(scrollPosition);

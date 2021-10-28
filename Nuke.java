@@ -32,12 +32,12 @@ public class Nuke extends Actor
         if(frame >= 15) {
             //setImage("nukeExplosion.png");
             getWorld().addObject(new Explosion(),getWorld().getWidth()/2,getWorld().getHeight()/2);
-            getWorld().addObject(new FlashBang(getWorld()),getWorld().getWidth()/2,getWorld().getHeight()/2);
+            getWorld().addObject(new FlashBang(getWorld(),10),getWorld().getWidth()/2,getWorld().getHeight()/2);
             
             for(Actor a : getWorld().getObjects(Actor.class)) {
-                if(a instanceof HUD || a instanceof CinematicBar) {
+                if(a instanceof HUD || a instanceof CinematicBar || a instanceof CloseBackground) {
                     getWorld().removeObject(a);
-                }else if(a instanceof Player || a instanceof Platform) {
+                }else if(a instanceof Player|| a instanceof Platform) {
                     a.getImage().setTransparency(255);
                 }
             }

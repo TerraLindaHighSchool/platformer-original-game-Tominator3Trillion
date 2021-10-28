@@ -17,7 +17,7 @@ public class MegaPhone extends Actor
     String im = "megaPhone.png";
     public MegaPhone(GreenfootSound audio) {
         this.audio = audio;
-
+        
     }
     
     
@@ -27,17 +27,19 @@ public class MegaPhone extends Actor
     
     public void act()
     {
-        currentScale = getImage().getHeight();
-        if(currentScale == goal) {
-            goal = Greenfoot.getRandomNumber(10)+50;
-        }
-        if (audio.isPlaying()) {
-            currentScale = currentScale + ((currentScale-goal>0)?-1:1);
-            setImage(im);
-            getImage().scale(getImage().getWidth(),currentScale);
-        } else if(justPlayed) {
-            setImage(im);
-            justPlayed = false;
+        if(getImage().getTransparency() == 255) {
+            currentScale = getImage().getHeight();
+            if(currentScale == goal) {
+                goal = Greenfoot.getRandomNumber(10)+50;
+            }
+            if (audio.isPlaying()) {
+                currentScale = currentScale + ((currentScale-goal>0)?-1:1);
+                setImage(im);
+                getImage().scale(getImage().getWidth(),currentScale);
+            } else if(justPlayed) {
+                setImage(im);
+                justPlayed = false;
+            }
         }
         
         

@@ -1,31 +1,26 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class MoneyBox here.
+ * Write a description of class SelfDestructionBox here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class MoneyBox extends Actor
+public class SelfDestructionBox extends Actor
 {
-    
-    
-    //private final GreenfootImage RAIN_PIC;
-    private final GreenfootImage[] PRESS_ANIMATION;
+     private final GreenfootImage[] PRESS_ANIMATION;
 
 
     private int frame = 0;
     private int pressIndex = 0;
-    
-    public static boolean hasBeenPressed;
     
     public boolean isPressed = false;
     
     private final GreenfootSound  BUTTON_DOWN = new GreenfootSound("buttonDown.wav");
     private final GreenfootSound BUTTON_UP = new GreenfootSound("buttonUp.wav");
     
-    public MoneyBox() {
-        hasBeenPressed = false;
+    public SelfDestructionBox() {
+        MoneyBox.hasBeenPressed = false;
         getImage().scale(100,100);
         
         BUTTON_DOWN.setVolume(75);
@@ -49,9 +44,9 @@ public class MoneyBox extends Actor
     
     public void act()
     {
-        if(Greenfoot.isKeyDown("m") && isTouching(Player.class) && !isPressed && !hasBeenPressed) {
+        if(Greenfoot.isKeyDown("m") && isTouching(Player.class) && !isPressed && !MoneyBox.hasBeenPressed) {
             isPressed = true;
-            hasBeenPressed = true;
+            MoneyBox.hasBeenPressed = true;
             BUTTON_DOWN.play();
             
         }
@@ -66,7 +61,7 @@ public class MoneyBox extends Actor
                 }
                 else
                 {
-                   getWorld().addObject(new MissileHill(),getWorld().getWidth()/2,getWorld().getHeight()+100);
+                   getWorld().addObject(new FailHill(),getWorld().getWidth()/2,getWorld().getHeight()+100);
                    BUTTON_UP.play();
                    isPressed = false;
                    frame = 0;
