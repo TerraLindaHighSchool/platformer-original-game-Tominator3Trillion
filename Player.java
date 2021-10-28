@@ -103,12 +103,15 @@ public class Player extends Actor
     
     private void walk() {
         boolean isTouchingWall=true;
+        int transparency = getImage().getTransparency();
         if(isWalking) {
             animator();
         } else {
             setImage(STANDING_IMAGE);
             walkIndex = 0;
         }
+        
+        getImage().setTransparency(transparency);
         
         if(Greenfoot.isKeyDown("right")  && !Greenfoot.isKeyDown("left") && (getOneObjectAtOffset(getImage().getWidth()/2,0, Platform.class)==null||isTouching(Phasable.class))) {
             
@@ -129,7 +132,7 @@ public class Player extends Actor
                 move(speed);
             }
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect || o instanceof Nuke||o instanceof CloseBackground)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect || o instanceof Nuke||o instanceof CloseBackground || o instanceof CinematicBar)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
                         if(o instanceof MissileHill||o instanceof FakeHill || o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag ) {
                             o.setLocation(o.getX()-(frame%2==0?1:0), o.getY());
@@ -156,7 +159,7 @@ public class Player extends Actor
             }
             
             for(Actor o : getWorld().getObjects(Actor.class)) {
-                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect|| o instanceof Nuke||o instanceof CloseBackground)) {
+                if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect|| o instanceof Nuke||o instanceof CloseBackground || o instanceof CinematicBar)) {
                     if(!(getX() != (int)(getWorld().getWidth()/2))) {
                         if(o instanceof MissileHill|| o instanceof FakeHill || o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag) {
                             o.setLocation(o.getX()+(frame%2==0?1:0), o.getY());

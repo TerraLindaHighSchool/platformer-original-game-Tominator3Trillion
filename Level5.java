@@ -30,6 +30,8 @@ public class Level5 extends World
     public static int scrollPosition;
     
     private int LEVEL_WIDTH = 2000;
+    
+    private MegaPhone megaPhone;
 
      
     
@@ -65,9 +67,13 @@ public class Level5 extends World
         Floor floor = new Floor("floor_grass.png");
         addObject(floor,600,680);
         
-        OutsideBuilding outsideBuilding = new OutsideBuilding();
-        addObject(outsideBuilding,-400,155);
+        SmallBuilding outsideBuilding = new SmallBuilding();
+        addObject(outsideBuilding,-200,415);
+        
 
+
+        TallWall tw = new TallWall();
+        addObject(tw, 23,-20);
 
         MoneyBox moneyBox = new MoneyBox();
         addObject(moneyBox,4000,625);
@@ -107,12 +113,20 @@ public class Level5 extends World
         
         Phasable phasable = new Phasable();
         addObject(phasable,1075,607);
-
+        
+        Phasable phasable2 = new Phasable();
+        addObject(phasable2,23,200);
+        
+        megaPhone = new MegaPhone(new GreenfootSound("speechNoTime.mp3"));
+        addObject(megaPhone,60,300);
+        
         setPaintOrder(FlashBang.class, Explosion.class, CinematicBar.class, HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
         ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);
         //player.setLocation(96,627);
 
         //addObject(new MoneyBox(),2000,600);
+        
+        
         
     }
     
@@ -137,6 +151,10 @@ public class Level5 extends World
     
     public void act()
     {
+        if(scrollFrame==1) {
+            megaPhone.play();
+        }
+        
         double s = scrollSpeed;
         if(scrollSpeed < 1) {
             s = scrollFrame % (1f/ scrollSpeed)==0  ? 1: 0;

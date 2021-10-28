@@ -8,7 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class CinematicBar extends Actor
 {
-    private float velocity = 1f;
+    private float velocity = 0f;
+    int frame = 0;
     
     public CinematicBar(boolean isTop) {
         velocity = isTop?1f:-1f;
@@ -16,7 +17,8 @@ public class CinematicBar extends Actor
     
     public void act()
     {
-        if(getY() > 750||getY() < -50)
-        setLocation(getX(), getY()+(int)velocity);
+        if((getY() > 720||getY() < -15)&& frame%3==0)
+            setLocation(getX(), getY()+(int)velocity);
+        frame++;
     }
 }

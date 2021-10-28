@@ -34,6 +34,14 @@ public class Nuke extends Actor
             getWorld().addObject(new Explosion(),getWorld().getWidth()/2,getWorld().getHeight()/2);
             getWorld().addObject(new FlashBang(getWorld()),getWorld().getWidth()/2,getWorld().getHeight()/2);
             
+            for(Actor a : getWorld().getObjects(Actor.class)) {
+                if(a instanceof HUD || a instanceof CinematicBar) {
+                    getWorld().removeObject(a);
+                }else if(a instanceof Player || a instanceof Platform) {
+                    a.getImage().setTransparency(255);
+                }
+            }
+
             getWorld().setBackground("nukeBackground.png");
             Level5.bgImage= new GreenfootImage("nukeBackground.png");
             Level5.bgBase= new GreenfootImage("nukeBackground.png");

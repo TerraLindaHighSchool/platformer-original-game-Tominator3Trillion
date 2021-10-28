@@ -32,26 +32,38 @@ public class MissileHill extends Actor
     public void act()
     {
         if(frame==0) {
+            int playerX = getWorld().getObjects(Player.class).get(0).getX();
+            playerX = playerX==600? playerX : 600;
             targetDestination = getWorld().getHeight() - 100;
             fh = new FrontHole();
             bh = new BackHole();
             getWorld().addObject(fh,getX()+15, getY()+20);
             getWorld().addObject(bh,getX()+15, getY()+20);
             Greenfoot.playSound("groundShake.mp3");
-            Greenfoot.playSound("risingNoise.mp3");
-            getWorld().addObject(new CinematicBar(true),600, -200);
-            getWorld().addObject(new CinematicBar(false), 600, 900);
+            
+            getWorld().addObject(new CinematicBar(true),playerX, -100);
+            getWorld().addObject(new CinematicBar(false), playerX, 800);
             //Greenfoot.playSound("buttonStartup.mp3");
         }
-        if(frame==245) {
+        if(frame==60) {
+            Greenfoot.playSound("risingNoise.mp3");
             //Greenfoot.playSound("mechanicSound1.mp3");
         }
-        if(frame==1300) {
+        
+        if(frame>=200 && frame<=455) {
+            for(Actor a : getWorld().getObjects(Actor.class)) {
+                if(a instanceof Player || a instanceof Platform || a instanceof MegaPhone) {
+                    a.getImage().setTransparency(255-(frame-200));
+                }
+            }
+        }
+        
+        if(frame==1490) {
             siren.play();
         }
         
         if(getY() > targetDestination) {
-            if(frame%4==0) {
+            if(frame%5==0) {
                 setLocation(getX(),getY() - 1);
                 fh.setLocation(fh.getX(),fh.getY() - 1);
                 bh.setLocation(bh.getX(),bh.getY() - 1);
@@ -63,7 +75,7 @@ public class MissileHill extends Actor
         if(atDestination) {
             destinationDelay++;
         }
-        if(atDestination && destinationDelay > 170) {
+        if(atDestination && destinationDelay > 30) {
             launchFrame++;
         }
         if(launchFrame == 1) {
@@ -72,7 +84,7 @@ public class MissileHill extends Actor
         if(launchFrame == 100) {
             //Greenfoot.playSound("risingNoise.mp3");
         }
-        if(launchFrame < 400 && launchFrame > 100) {
+        if(launchFrame < 500 && launchFrame > 200) {
             int hillShake = rand.nextInt(3)-1;
             int groundShake = rand.nextInt(7)-3;
             for(Actor o : getWorld().getObjects(Actor.class)) {
@@ -92,7 +104,7 @@ public class MissileHill extends Actor
                 }
             }
         }
-        if(launchFrame == 200) {
+        if(launchFrame == 382) {
             getWorld().addObject(new LaunchNuke(),bh.getX(), bh.getY()+55);
         }
         
