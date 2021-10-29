@@ -70,6 +70,9 @@ public class Level5 extends World
         CloseBackground cb = new CloseBackground("city.png", 0.25f);
         addObject(cb,1500,305);
         
+        CloseBackground cb2 = new CloseBackground("haze.png", 0f);
+        addObject(cb2,600,350);
+        
         SmallBuilding outsideBuilding = new SmallBuilding();
         addObject(outsideBuilding,-200,415);
         
@@ -137,7 +140,7 @@ public class Level5 extends World
         //player.setLocation(96,627);
 
         //addObject(new MoneyBox(),2000,600);
-        megaPhone.play();
+        
         
         
     }
@@ -163,6 +166,10 @@ public class Level5 extends World
     
     public void act()
     {
+        if(scrollFrame==1) {
+            megaPhone.play();
+        }
+        
         boolean isNegative = Math.abs(scrollSpeed)!=scrollSpeed;
         scrollSpeed=Math.abs(scrollSpeed);
         double s = scrollSpeed;

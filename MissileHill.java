@@ -113,6 +113,10 @@ public class MissileHill extends Actor
             getWorld().removeObject(fh);
             getWorld().removeObject(bh);
         }
+        if(bombDetonated && f == 1300) { 
+            Greenfoot.playSound("lossMusic.mp3");
+            f++;
+        }
         if(bombDetonated && f < 1300) {
             int hillShake = rand.nextInt(3)-1;
             int groundShake = rand.nextInt(11)-5;

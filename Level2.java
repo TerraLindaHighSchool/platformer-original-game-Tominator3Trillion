@@ -63,30 +63,35 @@ public class Level2 extends World
         Floor floor = new Floor("floor_metal.png");
         addObject(floor,600,680);
         
-        CloseBackground cb = new CloseBackground("longFence.png", 3f);
+        CloseBackground cb = new CloseBackground("longFence.png", 1f);
         addObject(cb,1000,450);
 
 
         OutsideBuilding outsideBuilding = new OutsideBuilding();
-        addObject(outsideBuilding,3746,155);
+        addObject(outsideBuilding,4746,155);
 
         TallWall tallWall = new TallWall();
-        addObject(tallWall,1076,415);
+        addObject(tallWall,3600,415);
+        TallWall tallWall3 = new TallWall();
+        addObject(tallWall3,3600,100);
         
         TallWall tallWall2 = new TallWall();
         addObject(tallWall2,-150,415);
 
         SmBrickWall smBrickWall = new SmBrickWall();
-        addObject(smBrickWall,1500,300);
+        addObject(smBrickWall,1700,300);
+        
+        SmBrickWall smBrickWall5 = new SmBrickWall();
+        addObject(smBrickWall5,1400,300);
 
         SmBrickWall smBrickWall2 = new SmBrickWall();
-        addObject(smBrickWall2,400,325);
+        addObject(smBrickWall2,500,325);
 
         BrickWall brickWall = new BrickWall();
-        addObject(brickWall,820,464);
+        addObject(brickWall,100,464);
 
         SmBrickWall smBrickWall3 = new SmBrickWall();
-        addObject(smBrickWall3,400,569);
+        addObject(smBrickWall3,400,500);
 
         SmBrickWall smBrickWall4 = new SmBrickWall();
         addObject(smBrickWall4,900,230);
@@ -95,19 +100,17 @@ public class Level2 extends World
         addObject(smallBuilding,2052,415);
 
         SmallBuilding smallBuilding2 = new SmallBuilding();
-        addObject(smallBuilding2,2836,415);
+        addObject(smallBuilding2,3200,415);
 
         BrickWall brickWall2 = new BrickWall();
-        addObject(brickWall2,2454,160);
+        addObject(brickWall2,2350,300);
 
         Door door = new Door();
-        addObject(door,3270,613);
+        addObject(door,4270,613);
 
-        AcidPool acidPool = new AcidPool();
-        addObject(acidPool,2442,565);
         
         Phasable phasable = new Phasable();
-        addObject(phasable,1075,607);
+        addObject(phasable,3600,607);
 
         setPaintOrder(FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
         ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);

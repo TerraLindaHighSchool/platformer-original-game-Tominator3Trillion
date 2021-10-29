@@ -110,6 +110,10 @@ public class Player extends Actor
             setImage(STANDING_IMAGE);
             walkIndex = 0;
         }
+        if(Greenfoot.isKeyDown("r")) {
+            Greenfoot.setWorld(new Level1());
+        }
+        
         
         getImage().setTransparency(transparency);
         

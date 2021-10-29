@@ -17,7 +17,7 @@ public class CinematicBar extends Actor
     
     public void act()
     {
-        if((getY() > 750||getY() < -50)&& frame%3==0)
+        if((getY() > 760||getY() < -60)&& frame%3==0)
             setLocation(getX(), getY()+(int)velocity);
         frame++;
     }
