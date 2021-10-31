@@ -38,8 +38,8 @@ public class LaunchNuke extends Actor
             smokes++;
         }
         
-        if(velocity < 1) {
-            setLocation(getX(), Math.random() < velocity? getY()-1 : getY());
+        if(velocity < 1f) {
+            setLocation(getX(), frame%(1/velocity)==0? getY()-1 : getY());
         } else {
             setLocation(getX(), Math.round(getY()-velocity));
         }

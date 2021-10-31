@@ -13,6 +13,7 @@ public class MissileHill extends Actor
     int destinationDelay = 0;
     int targetDestination;
     Random rand = new Random();
+    int playerX;
     
     boolean atDestination = false;
     
@@ -32,7 +33,8 @@ public class MissileHill extends Actor
     public void act()
     {
         if(frame==0) {
-            int playerX = getWorld().getObjects(Player.class).get(0).getX();
+            Greenfoot.playSound("buttonSpeech.mp3");
+            playerX = getWorld().getObjects(Player.class).get(0).getX();
             playerX = playerX==600? playerX : 600;
             targetDestination = getWorld().getHeight() - 100;
             fh = new FrontHole();
@@ -104,7 +106,7 @@ public class MissileHill extends Actor
                 }
             }
         }
-        if(launchFrame == 387) {
+        if(launchFrame == 388) {
             getWorld().addObject(new LaunchNuke(),bh.getX(), bh.getY()+55);
         }
         
@@ -113,11 +115,15 @@ public class MissileHill extends Actor
             getWorld().removeObject(fh);
             getWorld().removeObject(bh);
         }
-        if(bombDetonated && f == 1300) { 
+        if(bombDetonated && f == 1150) { 
+            playerX= getWorld().getObjects(Player.class).get(0).getX();
+            playerX = playerX==600? playerX : 600;
             Greenfoot.playSound("lossMusic.mp3");
+            getWorld().addObject(new Credits(false),playerX, 2000);
+            getWorld().addObject(new FadeToBlack(getWorld(), 6),playerX, getWorld().getHeight()/2);
             f++;
         }
-        if(bombDetonated && f < 1300) {
+        if(bombDetonated && f < 1150) {
             int hillShake = rand.nextInt(3)-1;
             int groundShake = rand.nextInt(11)-5;
             for(Actor o : getWorld().getObjects(Actor.class)) {
@@ -133,7 +139,7 @@ public class MissileHill extends Actor
                 if(o instanceof MissileHill|| o instanceof Flag || o instanceof FrontHole || o instanceof BackHole || o instanceof LaunchNuke) {
                     o.setLocation(o.getX()+hillShake, o.getY());
                 } else if(!(o instanceof FlashBang || o instanceof Explosion|| o instanceof HUD || o instanceof Smoke)) {
-                    o.setLocation(o.getX()+rand.nextInt(11)-5, o.getY()-rand.nextInt(2));
+                    o.setLocation(o.getX()+rand.nextInt(11)-5, o.getY()-rand.nextInt(3));
                 }
             }
             f++;

@@ -71,7 +71,7 @@ public class Level6 extends World
         addObject(new FlashBang(this, 9),getWidth()/2,getHeight()/2);
 
 
-        setPaintOrder(FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
+        setPaintOrder(Credits.class, FadeToBlack.class, FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
         ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);
         //player.setLocation(96,627);
 
@@ -100,6 +100,14 @@ public class Level6 extends World
     
     public void act()
     {
+        if(scrollFrame==1) {
+            int playerX= getObjects(Player.class).get(0).getX();
+            playerX = playerX==600? playerX : 600;
+            Greenfoot.playSound("winMusic.mp3");
+            addObject(new Credits(true),playerX, 2000);
+            addObject(new FadeToBlack(this, 6),playerX, getHeight()/2);
+        }
+        
         double s = scrollSpeed;
         if(scrollSpeed < 1) {
             s = scrollFrame % (1f/ scrollSpeed)==0  ? 1: 0;

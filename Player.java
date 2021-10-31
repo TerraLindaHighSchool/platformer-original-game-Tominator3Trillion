@@ -117,7 +117,7 @@ public class Player extends Actor
         
         getImage().setTransparency(transparency);
         
-        if(Greenfoot.isKeyDown("right")  && !Greenfoot.isKeyDown("left") && (getOneObjectAtOffset(getImage().getWidth()/2,0, Platform.class)==null||isTouching(Phasable.class))) {
+        if(Greenfoot.isKeyDown("right")  && !Greenfoot.isKeyDown("left") &&  getX()+speed < getWorld().getWidth()-1 && (getOneObjectAtOffset(getImage().getWidth()/2,0, Platform.class)==null||isTouching(Phasable.class))) {
             
             if(isFacingLeft) {
                 mirrorImages();
@@ -126,18 +126,19 @@ public class Player extends Actor
             isWalking = true;
             isFacingLeft = false;
             
-            if(getX() < getWorld().getWidth()/2 && getX()+speed > getWorld().getWidth()/2) {
+            
+            if(getX() < getWorld().getWidth()/2 && getX()+speed > getWorld().getWidth()/2 && !(getWorld() instanceof Menu)) {
                 setLocation(getWorld().getWidth()/2, getY());
             }
             
             //move(speed);
-            if(getX() != (int)(getWorld().getWidth()/2)&& getX() < getWorld().getWidth()) {
+            if(getX() != (int)(getWorld().getWidth()/2)&& getX() < getWorld().getWidth() || getWorld() instanceof Menu) {
                 //setLocation(getX()+speed, getY());
                 move(speed);
             }
             for(Actor o : getWorld().getObjects(Actor.class)) {
                 if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect || o instanceof Nuke||o instanceof CloseBackground || o instanceof CinematicBar)) {
-                    if(!(getX() != (int)(getWorld().getWidth()/2))) {
+                    if(!(getX() != (int)(getWorld().getWidth()/2))&& !(getWorld() instanceof Menu)) {
                         if(o instanceof MissileHill||o instanceof FakeHill || o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag ) {
                             o.setLocation(o.getX()-(frame%2==0?1:0), o.getY());
                         } else {
@@ -146,7 +147,7 @@ public class Player extends Actor
                     }
                 }
             }
-        }if(Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right") && (getOneObjectAtOffset(-(getImage().getWidth()/2),0, Platform.class)==null||isTouching(Phasable.class))) {
+        }if(Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right")&&  getX()-speed > 1 && (getOneObjectAtOffset(-(getImage().getWidth()/2),0, Platform.class)==null||isTouching(Phasable.class))) {
             if(!isFacingLeft) {
                 mirrorImages();
             }
@@ -154,17 +155,19 @@ public class Player extends Actor
             isWalking = true;
             isFacingLeft = true;
             //move(-speed);
-            if(getX() > getWorld().getWidth()/2 && getX()-speed < getWorld().getWidth()/2) {
+            if(getX() > getWorld().getWidth()/2 && getX()-speed < getWorld().getWidth()/2 && !(getWorld() instanceof Menu)) {
                 setLocation(getWorld().getWidth()/2, getY());
             }
-            if(getX() != (int)(getWorld().getWidth()/2) && getX() > 0) {
-                //setLocation(getX()-speed, getY());
+            
+            //move(speed);
+            if(getX() != (int)(getWorld().getWidth()/2)&& getX() > getWorld().getWidth()|| getWorld() instanceof Menu) {
+                //setLocation(getX()+speed, getY());
                 move(-speed);
             }
             
             for(Actor o : getWorld().getObjects(Actor.class)) {
                 if(!(o instanceof Player || o instanceof Floor || o instanceof HUD || o instanceof VisualEffect|| o instanceof Nuke||o instanceof CloseBackground || o instanceof CinematicBar)) {
-                    if(!(getX() != (int)(getWorld().getWidth()/2))) {
+                    if(!(getX() != (int)(getWorld().getWidth()/2))&& !(getWorld() instanceof Menu)) {
                         if(o instanceof MissileHill|| o instanceof FakeHill || o instanceof LaunchNuke|| o instanceof Smoke || o instanceof FrontHole|| o instanceof BackHole|| o instanceof Flag) {
                             o.setLocation(o.getX()+(frame%2==0?1:0), o.getY());
                         } else {

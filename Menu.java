@@ -1,16 +1,16 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Level1 here.
+ * Write a description of class Menu here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Level1 extends World
+public class Menu extends World
 {
 
     /**
-     * Constructor for objects of class Level1.
+     * Constructor for objects of class Menu.
      * 
      */
     private final float GRAVITY = 0.0667f;
@@ -19,7 +19,7 @@ public class Level1 extends World
     private final float JUMP_FORCE = 5.6f;
     private int MAX_HEALTH = 10;
     private int MAX_POWERUP = 3;
-    private Class NEXT_LEVEL = Level2.class;
+    private Class NEXT_LEVEL = Menu.class;
     
     
     public static String bgImageName;
@@ -31,10 +31,10 @@ public class Level1 extends World
     
     private int LEVEL_WIDTH = 2000;
 
-     
+    private GreenfootSound music = new GreenfootSound("menuMusic.mp3");
     
     
-    public Level1()
+    public Menu()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1200, 700, 1, false); 
@@ -65,67 +65,46 @@ public class Level1 extends World
         Floor floor = new Floor("floor_grass.png");
         addObject(floor,600,680);
 
-        OutsideBuilding outsideBuilding = new OutsideBuilding();
-        addObject(outsideBuilding,3746,155);
+        CloseBackground cb = new CloseBackground("city.png", 0.25f);
+        addObject(cb,1500,305);
 
-        TallWall tallWall = new TallWall();
-        addObject(tallWall,1076,415);
-        
-        TallWall tallWall2 = new TallWall();
-        addObject(tallWall2,-150,415);
+        CloseBackground cb2 = new CloseBackground("haze.png", 0f);
+        addObject(cb2,600,350);
 
-        SmBrickWall smBrickWall = new SmBrickWall();
-        addObject(smBrickWall,1500,300);
+        Title title = new Title();
+        addObject(title,600,225);
 
-        SmBrickWall smBrickWall2 = new SmBrickWall();
-        addObject(smBrickWall2,400,325);
+        PressEnter pressEnter = new PressEnter();
+        addObject(pressEnter,576,411);
 
-        BrickWall brickWall = new BrickWall();
-        addObject(brickWall,820,464);
-
-        SmBrickWall smBrickWall3 = new SmBrickWall();
-        addObject(smBrickWall3,400,569);
-
-        SmBrickWall smBrickWall4 = new SmBrickWall();
-        addObject(smBrickWall4,900,230);
-
-        SmallBuilding smallBuilding = new SmallBuilding();
-        addObject(smallBuilding,2052,415);
-
-        SmallBuilding smallBuilding2 = new SmallBuilding();
-        addObject(smallBuilding2,2836,415);
-
-        BrickWall brickWall2 = new BrickWall();
-        addObject(brickWall2,2454,160);
-
-        Door door = new Door();
-        addObject(door,3270,613);
-
-        AcidPool acidPool = new AcidPool();
-        addObject(acidPool,2442,565);
-        
-        Phasable phasable = new Phasable();
-        addObject(phasable,1075,607);
-
-        setPaintOrder(FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
+        setPaintOrder(VisualEffect.class, FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
         ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);
         //player.setLocation(96,627);
 
         //addObject(new MoneyBox(),2000,600);
+
+        for(Actor o : getObjects(HUD.class)) {
+            removeObject(o);
+        }
+
+        SmBrickWall smBrickWall = new SmBrickWall();
+        addObject(smBrickWall,528,444);
+
+        SmBrickWall smBrickWall2 = new SmBrickWall();
+        addObject(smBrickWall2,639,443);
+
+        SmBrickWall smBrickWall3 = new SmBrickWall();
+        addObject(smBrickWall3,527,489);
+
+        SmBrickWall smBrickWall4 = new SmBrickWall();
+        addObject(smBrickWall4,638,489);
+
         
+        SmBrickWall smBrickWall5 = new SmBrickWall();
+        addObject(smBrickWall5,343,550);
     }
     
-     private void spawn()
-    {
-        if(Math.random() < 0.0025)
-        {
-            addObject(new Rock(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
-        }
-        if(Math.random() < 0.01)
-        {
-            addObject(new AcidRain(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
-        }
-    }
+
     
     private void paint(int position)
     {
@@ -136,6 +115,15 @@ public class Level1 extends World
     
     public void act()
     {
+        if(scrollFrame==1) {
+            music.playLoop();
+        }
+        
+        if(Greenfoot.isKeyDown("enter")) {
+            music.stop();
+            Greenfoot.setWorld(new Level1());
+        }
+        
         double s = scrollSpeed;
         if(scrollSpeed < 1) {
             s = scrollFrame % (1f/ scrollSpeed)==0  ? 1: 0;

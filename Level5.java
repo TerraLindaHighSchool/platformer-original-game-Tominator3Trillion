@@ -87,6 +87,9 @@ public class Level5 extends World
         PressM pm = new PressM();
         addObject(pm,3600,300);
         
+        PressM pm2 = new PressM();
+        addObject(pm2,-1200,300);
+        
         MoneyBox moneyBox = new MoneyBox();
         addObject(moneyBox,4000,605);
         
@@ -135,12 +138,13 @@ public class Level5 extends World
         megaPhone = new MegaPhone(new GreenfootSound("speechNoTime.mp3"));
         addObject(megaPhone,60,300);
         
-        setPaintOrder(FlashBang.class, Explosion.class, CinematicBar.class, HUD.class, Player.class,Door.class, SelfDestructionBox.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
+        setPaintOrder(Credits.class, FadeToBlack.class,FlashBang.class, Explosion.class, CinematicBar.class, HUD.class, Player.class,Door.class, SelfDestructionBox.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
         ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);
         //player.setLocation(96,627);
 
         //addObject(new MoneyBox(),2000,600);
         
+
         
         
     }
