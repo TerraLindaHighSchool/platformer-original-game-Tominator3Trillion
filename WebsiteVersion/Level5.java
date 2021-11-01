@@ -95,10 +95,10 @@ public class Level5 extends World
         addObject(pm2,-1200,300);
         
         MoneyBox moneyBox = new MoneyBox();
-        addObject(moneyBox,4000,605);
+        addObject(moneyBox,100,605);//4000
         
         SelfDestructionBox selfDestructionBox = new SelfDestructionBox();
-        addObject(selfDestructionBox,300,605);
+        addObject(selfDestructionBox,300,605);//-1000
 
         TallWall tallWall = new TallWall();
         addObject(tallWall,1076,415);

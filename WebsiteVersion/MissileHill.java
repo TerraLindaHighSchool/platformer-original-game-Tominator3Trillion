@@ -48,7 +48,7 @@ public class MissileHill extends Actor
             getWorld().addObject(new CinematicBar(false), playerX, 800);
             //Greenfoot.playSound("buttonStartup.mp3");
         }
-        if(frame==120) {
+        if(frame==165) {
             Greenfoot.playSound("risingNoise.mp3");
             ((Level5)getWorld()).nextLevel();
             //Greenfoot.playSound("mechanicSound1.mp3");
@@ -62,13 +62,13 @@ public class MissileHill extends Actor
             }
         }
         
-        if(frame==1490) {
+        if(frame==1750) {
             siren.play();
             
         }
         
         if(getY() > targetDestination) {
-            if(frame%5==0) {
+            if(frame%6==0) {
                 setLocation(getX(),getY() - 1);
                 fh.setLocation(fh.getX(),fh.getY() - 1);
                 bh.setLocation(bh.getX(),bh.getY() - 1);
@@ -89,7 +89,7 @@ public class MissileHill extends Actor
         if(launchFrame == 100) {
             //Greenfoot.playSound("risingNoise.mp3");
         }
-        if(launchFrame < 500 && launchFrame > 200) {
+        if(launchFrame > 235 && launchFrame < 640) {
             int hillShake = rand.nextInt(3)-1;
             int groundShake = rand.nextInt(7)-3;
             for(Actor o : getWorld().getObjects(Actor.class)) {
@@ -109,7 +109,7 @@ public class MissileHill extends Actor
                 }
             }
         }
-        if(launchFrame == 388) {
+        if(launchFrame == 450) {
             getWorld().addObject(new LaunchNuke(),bh.getX(), bh.getY()+55);
         }
         
@@ -118,7 +118,7 @@ public class MissileHill extends Actor
             getWorld().removeObject(fh);
             getWorld().removeObject(bh);
         }
-        if(bombDetonated && f == 1150) { 
+        if(bombDetonated && f == 1290) { 
             playerX= getWorld().getObjects(Player.class).get(0).getX();
             playerX = playerX==600? playerX : 600;
             lossMusic.play();
@@ -126,7 +126,7 @@ public class MissileHill extends Actor
             getWorld().addObject(new FadeToBlack(getWorld(), 6),playerX, getWorld().getHeight()/2);
             f++;
         }
-        if(bombDetonated && f < 1150) {
+        if(bombDetonated && f < 1290) {
             int hillShake = rand.nextInt(3)-1;
             int groundShake = rand.nextInt(11)-5;
             for(Actor o : getWorld().getObjects(Actor.class)) {

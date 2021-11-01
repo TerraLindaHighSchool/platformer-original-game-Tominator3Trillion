@@ -46,7 +46,7 @@ public class FailHill extends MissileHill
             getWorld().addObject(new CinematicBar(false), playerX, 800);
             //Greenfoot.playSound("buttonStartup.mp3");
         }
-        if(frame==153) {
+        if(frame==165) {
             Greenfoot.playSound("risingNoise.mp3");
             ((Level5)getWorld()).nextLevel();
             //Greenfoot.playSound("mechanicSound1.mp3");
