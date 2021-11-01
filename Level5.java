@@ -17,8 +17,8 @@ public class Level5 extends World
     private final GreenfootSound MUSIC = null;
     private int SPEED = 3;
     private final float JUMP_FORCE = 5.6f;
-    private int MAX_HEALTH = 10;
-    private int MAX_POWERUP = 3;
+    private int MAX_HEALTH = 3;
+    private int MAX_POWERUP = 1;
     private Class NEXT_LEVEL = Level2.class;
     
     
@@ -33,7 +33,7 @@ public class Level5 extends World
     
     private MegaPhone megaPhone;
 
-     
+    GreenfootSound m1 = new GreenfootSound("city.mp3");
     
     
     public Level5()
@@ -168,10 +168,15 @@ public class Level5 extends World
         bg.drawImage(bgImage, position + PIC_WIDTH, 0);
     }
     
+    public void nextLevel() {
+        m1.stop();
+    }
+    
     public void act()
     {
         if(scrollFrame==1) {
             megaPhone.play();
+            m1.playLoop();
         }
         
         boolean isNegative = Math.abs(scrollSpeed)!=scrollSpeed;

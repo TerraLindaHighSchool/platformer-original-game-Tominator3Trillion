@@ -33,6 +33,8 @@ public class Menu extends World
 
     private GreenfootSound music = new GreenfootSound("menuMusic.mp3");
     
+    GreenfootSound m1 = new GreenfootSound("city.mp3");
+    
     
     public Menu()
     {    
@@ -117,10 +119,12 @@ public class Menu extends World
     {
         if(scrollFrame==1) {
             music.playLoop();
+            m1.playLoop();
         }
         
         if(Greenfoot.isKeyDown("enter")) {
             music.stop();
+            m1.stop();
             Greenfoot.setWorld(new Level1());
         }
         

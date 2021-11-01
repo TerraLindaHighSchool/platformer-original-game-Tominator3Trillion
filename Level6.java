@@ -18,7 +18,7 @@ public class Level6 extends World
     private int SPEED = 3;
     private final float JUMP_FORCE = 5.6f;
     private int MAX_HEALTH = 10;
-    private int MAX_POWERUP = 3;
+    private int MAX_POWERUP = 0;
     private Class NEXT_LEVEL = Level2.class;
     
     
@@ -74,6 +74,10 @@ public class Level6 extends World
         setPaintOrder(Credits.class, FadeToBlack.class, FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
         ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);
         //player.setLocation(96,627);
+        
+        for(Actor o : getObjects(HUD.class)) {
+            removeObject(o);
+        }
 
         //addObject(new MoneyBox(),2000,600);
         
@@ -116,9 +120,6 @@ public class Level6 extends World
         while(s > 0 && scrollPosition < -PIC_WIDTH) scrollPosition += PIC_WIDTH;
         while(s < 0 && scrollPosition > 0) scrollPosition -= PIC_WIDTH;
         paint(scrollPosition);
-        if(!MoneyBox.hasBeenPressed) {
-            spawn();
-        }
         scrollFrame++;
     }
 }

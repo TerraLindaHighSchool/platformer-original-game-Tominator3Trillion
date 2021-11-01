@@ -17,8 +17,8 @@ public class Level2 extends World
     private final GreenfootSound MUSIC = null;
     private int SPEED = 3;
     private final float JUMP_FORCE = 5.6f;
-    private int MAX_HEALTH = 10;
-    private int MAX_POWERUP = 3;
+    private int MAX_HEALTH = 3;
+    private int MAX_POWERUP = 1;
     private Class NEXT_LEVEL = Level3.class;
     
     
@@ -30,7 +30,7 @@ public class Level2 extends World
     
     private int LEVEL_WIDTH = 2000;
 
-     
+    private GreenfootSound m1 = new GreenfootSound("factory1.mp3");
     
     
     public Level2()
@@ -121,6 +121,8 @@ public class Level2 extends World
 
     }
     
+    
+    
      private void spawn()
     {
         if(Math.random() < 0.0025)
@@ -162,8 +164,16 @@ public class Level2 extends World
         
     }
     
+    public void nextLevel() {
+        m1.stop();
+    }
+    
     public void act()
     {
+        if(scrollFrame==1) {
+            m1.playLoop();
+        }
+        
         if(!MoneyBox.hasBeenPressed) {
             spawn();
         }

@@ -17,8 +17,8 @@ public class Level1 extends World
     private final GreenfootSound MUSIC = null;
     private int SPEED = 3;
     private final float JUMP_FORCE = 5.6f;
-    private int MAX_HEALTH = 10;
-    private int MAX_POWERUP = 3;
+    private int MAX_HEALTH = 3;
+    private int MAX_POWERUP = 1;
     private Class NEXT_LEVEL = Level2.class;
     
     
@@ -31,7 +31,7 @@ public class Level1 extends World
     
     private int LEVEL_WIDTH = 2000;
 
-     
+    private GreenfootSound m1 = new GreenfootSound("outside.mp3");
     
     
     public Level1()
@@ -134,8 +134,15 @@ public class Level1 extends World
         bg.drawImage(bgImage, position + PIC_WIDTH, 0);
     }
     
+    public void nextLevel() {
+        m1.stop();
+    }
+    
     public void act()
     {
+        if(scrollFrame==1) {
+            m1.playLoop();
+        }
         double s = scrollSpeed;
         if(scrollSpeed < 1) {
             s = scrollFrame % (1f/ scrollSpeed)==0  ? 1: 0;

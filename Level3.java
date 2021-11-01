@@ -17,8 +17,8 @@ public class Level3 extends World
     private final GreenfootSound MUSIC = null;
     private int SPEED = 3;
     private final float JUMP_FORCE = 5.6f;
-    private int MAX_HEALTH = 10;
-    private int MAX_POWERUP = 3;
+    private int MAX_HEALTH = 3;
+    private int MAX_POWERUP = 1;
     private Class NEXT_LEVEL = Level4.class;
     
     
@@ -29,9 +29,12 @@ public class Level3 extends World
     public static int scrollPosition;
     
     private int LEVEL_WIDTH = 2000;
+    
+    private MegaPhone megaPhone;
 
      
-    
+    GreenfootSound m1 = new GreenfootSound("factory1.mp3");
+    GreenfootSound m2 = new GreenfootSound("factory2.mp3");
     
     public Level3()
     {    
@@ -71,8 +74,8 @@ public class Level3 extends World
         TallWall tallWall = new TallWall();
         addObject(tallWall,1200,300);
         
-        TallWall tallWall2 = new TallWall();
-        addObject(tallWall2,-150,300);
+        SmallBuilding smallBuilding4 = new SmallBuilding();
+        addObject(smallBuilding4,-190,415);
 
         SmBrickWall smBrickWall = new SmBrickWall();
         addObject(smBrickWall,1500,300);
@@ -106,7 +109,8 @@ public class Level3 extends World
         addObject(door,4515,613);
 
 
-        
+        megaPhone = new MegaPhone(new GreenfootSound("stationsSpeech.mp3"));
+        addObject(megaPhone,65,300);
 
 
         setPaintOrder(FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
@@ -138,6 +142,8 @@ public class Level3 extends World
         bg.drawImage(bgImage, position - PIC_WIDTH, 0);
     }
     
+
+    
     public void scroll(double scrollSpeed)
     {
         boolean isNegative = Math.abs(scrollSpeed)!=scrollSpeed;
@@ -159,8 +165,18 @@ public class Level3 extends World
         
     }
     
+    public void nextLevel() {
+        m1.stop();
+        m2.stop();
+    }
+    
     public void act()
     {
+        if(scrollFrame==1) {
+            megaPhone.play();
+            m1.playLoop();
+            m2.playLoop();
+        }
         if(!MoneyBox.hasBeenPressed) {
             spawn();
         }

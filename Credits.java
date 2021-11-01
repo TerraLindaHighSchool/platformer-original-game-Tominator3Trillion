@@ -27,8 +27,10 @@ public class Credits extends VisualEffect
     
     public void act()
     {
-        
-        
+        if(getY()<-2500) {
+            
+            Greenfoot.setWorld(new Menu());
+        }
         
         if(frame%3==0)
             setLocation(getX(), getY()-(int)velocity);

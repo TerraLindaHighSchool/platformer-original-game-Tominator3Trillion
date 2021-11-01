@@ -8,6 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Player extends Actor
 {
+    
     private Health[ ] health;
     private Powerup[] powerup;
     private int healthCount;
@@ -29,6 +30,7 @@ public class Player extends Actor
     public Player(int speed, float jumpForce, float gravity,
     int maxHealth, int maxPowerup, Class nextLevel, GreenfootSound music)
     {
+        Greenfoot.setSpeed(48);
         getImage().scale(70, 70);
         this.speed = speed;
         JUMP_FORCE = jumpForce;
@@ -110,8 +112,24 @@ public class Player extends Actor
             setImage(STANDING_IMAGE);
             walkIndex = 0;
         }
-        if(Greenfoot.isKeyDown("r")) {
-            Greenfoot.setWorld(new Level1());
+        if(Greenfoot.isKeyDown("r") && !(getWorld() instanceof Menu || getWorld() instanceof Level6)) {
+            if(getWorld() instanceof Level1) {
+                ((Level1)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level1());
+            }else if(getWorld() instanceof Level2) {
+                ((Level2)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level2());
+            }else if(getWorld() instanceof Level3) {
+                ((Level3)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level3());
+            }else if(getWorld() instanceof Level4) {
+                ((Level4)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level4());
+            }else if(getWorld() instanceof Level5) {
+                ((Level5)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level5());
+            }
+            
         }
         
         
@@ -132,7 +150,7 @@ public class Player extends Actor
             }
             
             //move(speed);
-            if(getX() != (int)(getWorld().getWidth()/2)&& getX() < getWorld().getWidth() || getWorld() instanceof Menu) {
+            if(getX() != getWorld().getWidth()/2 || getWorld() instanceof Menu) {
                 //setLocation(getX()+speed, getY());
                 move(speed);
             }
@@ -148,6 +166,7 @@ public class Player extends Actor
                 }
             }
         }if(Greenfoot.isKeyDown("left") && !Greenfoot.isKeyDown("right")&&  getX()-speed > 1 && (getOneObjectAtOffset(-(getImage().getWidth()/2),0, Platform.class)==null||isTouching(Phasable.class))) {
+            
             if(!isFacingLeft) {
                 mirrorImages();
             }
@@ -160,7 +179,7 @@ public class Player extends Actor
             }
             
             //move(speed);
-            if(getX() != (int)(getWorld().getWidth()/2)&& getX() > getWorld().getWidth()|| getWorld() instanceof Menu) {
+            if(getX() != getWorld().getWidth()/2 || getWorld() instanceof Menu) {
                 //setLocation(getX()+speed, getY());
                 move(-speed);
             }
@@ -223,7 +242,15 @@ public class Player extends Actor
     {
         if(isTouching(Door.class))
         {
-            //MUSIC.stop();
+            if(getWorld() instanceof Level1) {
+                ((Level1)getWorld()).nextLevel();
+            }else if(getWorld() instanceof Level2) {
+                ((Level2)getWorld()).nextLevel();
+            }else if(getWorld() instanceof Level3) {
+                ((Level3)getWorld()).nextLevel();
+            }else if(getWorld() instanceof Level4) {
+                ((Level4)getWorld()).nextLevel();
+            }
             Greenfoot.playSound("door_open.wav");
             World world = null;
             try 
@@ -282,7 +309,22 @@ public class Player extends Actor
         if(healthCount == 0)
         {
             //MUSIC.stop();
-            Greenfoot.setWorld(new Level1());
+            if(getWorld() instanceof Level1) {
+                ((Level1)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level1());
+            }else if(getWorld() instanceof Level2) {
+                ((Level2)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level2());
+            }else if(getWorld() instanceof Level3) {
+                ((Level3)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level3());
+            }else if(getWorld() instanceof Level4) {
+                ((Level4)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level4());
+            }else if(getWorld() instanceof Level5) {
+                ((Level5)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Level5());
+            }
         }
     }
     private boolean isOnGround() {

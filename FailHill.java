@@ -48,12 +48,13 @@ public class FailHill extends MissileHill
         }
         if(frame==120) {
             Greenfoot.playSound("risingNoise.mp3");
+            ((Level5)getWorld()).nextLevel();
             //Greenfoot.playSound("mechanicSound1.mp3");
         }
         
         if(frame>=200 && frame<=455) {
             for(Actor a : getWorld().getObjects(Actor.class)) {
-                if(a instanceof Player || a instanceof Platform ||a instanceof HUD|| a instanceof MegaPhone || a instanceof Obstacle || a instanceof SelfDestructionBox) {
+                if(a instanceof Player || a instanceof HUD|| a instanceof Platform|| a instanceof DontPressSign|| a instanceof PressM || a instanceof MegaPhone || a instanceof Obstacle || a instanceof SelfDestructionBox) {
                     a.getImage().setTransparency(255-(frame-200));
                 }
             }

@@ -54,6 +54,7 @@ public class MoneyBox extends Actor
             hasBeenPressed = true;
             BUTTON_DOWN.play();
             
+            
         }
         if(isPressed) {
             if( frame % 3 == 0)

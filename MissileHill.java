@@ -49,6 +49,7 @@ public class MissileHill extends Actor
         }
         if(frame==120) {
             Greenfoot.playSound("risingNoise.mp3");
+            ((Level5)getWorld()).nextLevel();
             //Greenfoot.playSound("mechanicSound1.mp3");
         }
         
@@ -62,6 +63,7 @@ public class MissileHill extends Actor
         
         if(frame==1490) {
             siren.play();
+            
         }
         
         if(getY() > targetDestination) {
