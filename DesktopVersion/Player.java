@@ -126,6 +126,9 @@ public class Player extends Actor
                 ((Level4)getWorld()).nextLevel();
                 Greenfoot.setWorld(new Level4());
             }else if(getWorld() instanceof Level5) {
+                try {
+                getWorld().getObjects(MissileHill.class).get(0).lossMusic.stop();
+            }catch(Exception e) {}
                 ((Level5)getWorld()).nextLevel();
                 Greenfoot.setWorld(new Level5());
             }

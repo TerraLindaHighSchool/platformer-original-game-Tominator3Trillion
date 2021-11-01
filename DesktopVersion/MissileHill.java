@@ -24,6 +24,7 @@ public class MissileHill extends Actor
     
     GreenfootSound siren = new GreenfootSound("sirenExplosion.mp3");
     GreenfootSound launchStartup = new GreenfootSound("launchStartup.mp3");
+    public GreenfootSound lossMusic = new GreenfootSound("lossMusic.mp3");
     
 
     public MissileHill() {
@@ -120,7 +121,7 @@ public class MissileHill extends Actor
         if(bombDetonated && f == 1150) { 
             playerX= getWorld().getObjects(Player.class).get(0).getX();
             playerX = playerX==600? playerX : 600;
-            Greenfoot.playSound("lossMusic.mp3");
+            lossMusic.play();
             getWorld().addObject(new Credits(false),playerX, 2000);
             getWorld().addObject(new FadeToBlack(getWorld(), 6),playerX, getWorld().getHeight()/2);
             f++;
