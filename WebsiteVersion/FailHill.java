@@ -104,7 +104,7 @@ public class FailHill extends MissileHill
                 }
             }
         }
-        if(launchFrame == 1156) {
+        if(launchFrame == 1160) {
             getWorld().addObject(new FlashBang(getWorld(),100),getWorld().getWidth()/2,getWorld().getHeight()/2);
             ringEar.play();
             Greenfoot.setWorld(new Level6());

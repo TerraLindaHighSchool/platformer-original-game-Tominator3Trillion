@@ -13,6 +13,8 @@ public class Credits extends VisualEffect
     
     GreenfootImage im;
     
+    int startLocation = 0;
+    
     public Credits(boolean won) {
         im = new GreenfootImage(1200, 2400);
         if(won) {
@@ -23,16 +25,18 @@ public class Credits extends VisualEffect
         im.drawImage(new GreenfootImage("credits.png"),0,0);
         setImage(im);
         
+        
+        
     }
     
     public void act()
     {
-        if(getY()<-2500) {
+        if(getY()<-1250) {
             
-            Greenfoot.setWorld(new Menu());
+            Greenfoot.setWorld(new Level5(true));
         }
         
-        if(frame%3==0)
+        if(frame%1==0)
             setLocation(getX(), getY()-(int)velocity);
         frame++;
     }

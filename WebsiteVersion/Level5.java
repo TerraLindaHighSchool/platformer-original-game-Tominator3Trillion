@@ -35,6 +35,7 @@ public class Level5 extends World
 
     GreenfootSound m1 = new GreenfootSound("city.mp3");
     
+
     
     public Level5()
     {    
@@ -49,6 +50,25 @@ public class Level5 extends World
         scrollPosition = 1;
         bgBase.drawImage(bgImage, 0, 0);
         prepare();
+        
+    }
+    
+    public Level5(boolean creditContinue)
+    {    
+        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        super(1200, 700, 1, false); 
+        bgImageName = "skyBox1.png";
+        PIC_WIDTH = (new GreenfootImage(bgImageName)).getWidth();
+        scrollSpeed = 0.1f;
+        setBackground(bgImageName);
+        bgImage = new GreenfootImage(getBackground());
+        bgBase = new GreenfootImage(PIC_WIDTH, getHeight());
+        scrollPosition = 1;
+        bgBase.drawImage(bgImage, 0, 0);
+        addObject(new FadeToBlack(this, 2, true),600, getHeight()/2);
+        System.out.println("5:)");
+        prepare();
+        
     }
     
      
@@ -75,7 +95,6 @@ public class Level5 extends World
         
         SmallBuilding outsideBuilding = new SmallBuilding();
         addObject(outsideBuilding,-200,415);
-        
 
 
         TallWall tw = new TallWall();
@@ -95,29 +114,29 @@ public class Level5 extends World
         addObject(pm2,-1200,300);
         
         MoneyBox moneyBox = new MoneyBox();
-        addObject(moneyBox,100,605);//4000
+        addObject(moneyBox,4000,605);//4000
         
         SelfDestructionBox selfDestructionBox = new SelfDestructionBox();
-        addObject(selfDestructionBox,300,605);//-1000
+        addObject(selfDestructionBox,-1000,605);//-1000
 
         TallWall tallWall = new TallWall();
         addObject(tallWall,1076,415);
         
 
         SmBrickWall smBrickWall = new SmBrickWall();
-        addObject(smBrickWall,1500,300);
+        addObject(smBrickWall,1300,300);
 
         SmBrickWall smBrickWall2 = new SmBrickWall();
-        addObject(smBrickWall2,400,325);
+        addObject(smBrickWall2,200,400);
 
         BrickWall brickWall = new BrickWall();
-        addObject(brickWall,820,464);
+        addObject(brickWall,700,400);
 
         SmBrickWall smBrickWall3 = new SmBrickWall();
-        addObject(smBrickWall3,400,569);
+        addObject(smBrickWall3,500,569);
 
         SmBrickWall smBrickWall4 = new SmBrickWall();
-        addObject(smBrickWall4,900,230);
+        addObject(smBrickWall4,1000,230);
 
         SmallBuilding smallBuilding = new SmallBuilding();
         addObject(smallBuilding,2052,415);
@@ -126,12 +145,9 @@ public class Level5 extends World
         addObject(smallBuilding2,2836,415);
 
         BrickWall brickWall2 = new BrickWall();
-        addObject(brickWall2,2454,160);
+        addObject(brickWall2,2300,160);
 
 
-
-        AcidPool acidPool = new AcidPool();
-        addObject(acidPool,2442,565);
         
         Phasable phasable = new Phasable();
         addObject(phasable,1075,607);

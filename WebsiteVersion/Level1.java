@@ -67,6 +67,9 @@ public class Level1 extends World
 
         OutsideBuilding outsideBuilding = new OutsideBuilding();
         addObject(outsideBuilding,3746,155);
+        
+        PressR pressR = new PressR();
+        addObject(pressR,600,100);
 
         TallWall tallWall = new TallWall();
         addObject(tallWall,1076,415);

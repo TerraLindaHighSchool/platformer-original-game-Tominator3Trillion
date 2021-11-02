@@ -112,8 +112,11 @@ public class Player extends Actor
             setImage(STANDING_IMAGE);
             walkIndex = 0;
         }
-        if(Greenfoot.isKeyDown("r") && !(getWorld() instanceof Menu || getWorld() instanceof Level6)) {
-            if(getWorld() instanceof Level1) {
+        if(Greenfoot.isKeyDown("r") && !(getWorld() instanceof Level6)) {
+            if(getWorld() instanceof Menu) {
+                ((Menu)getWorld()).nextLevel();
+                Greenfoot.setWorld(new Menu());
+            }else if(getWorld() instanceof Level1) {
                 ((Level1)getWorld()).nextLevel();
                 Greenfoot.setWorld(new Level1());
             }else if(getWorld() instanceof Level2) {

@@ -35,6 +35,8 @@ public class Menu extends World
     
     GreenfootSound m1 = new GreenfootSound("city.mp3");
     
+    boolean enterPressed = false;
+    
     
     public Menu()
     {    
@@ -78,8 +80,11 @@ public class Menu extends World
 
         PressEnter pressEnter = new PressEnter();
         addObject(pressEnter,576,411);
+        
+        PressR pressR = new PressR();
+        addObject(pressR,1000,375);
 
-        setPaintOrder(VisualEffect.class, FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
+        setPaintOrder(OpeningStory.class, VisualEffect.class, FlashBang.class, Explosion.class,HUD.class, Player.class,Door.class, Platform.class,AcidPool.class, Obstacle.class, Collectable.class
         ,MoneyBox.class, Flag.class, FrontHole.class, LaunchNuke.class,Smoke.class,BackHole.class, MissileHill.class, Nuke.class);
         //player.setLocation(96,627);
 
@@ -115,17 +120,24 @@ public class Menu extends World
         bg.drawImage(bgImage, position + PIC_WIDTH, 0);
     }
     
+     public void nextLevel() {
+        m1.stop();
+        music.stop();
+    }
+    
     public void act()
     {
-        if(scrollFrame==1) {
+        if(scrollFrame==1 ) {
+            
             music.playLoop();
             m1.playLoop();
         }
         
-        if(Greenfoot.isKeyDown("enter")) {
+        if(Greenfoot.isKeyDown("enter")&& !enterPressed) {
+            enterPressed = true;
             music.stop();
             m1.stop();
-            Greenfoot.setWorld(new Level1());
+            addObject(new OpeningStory(),600, getHeight()/2);
         }
         
         double s = scrollSpeed;

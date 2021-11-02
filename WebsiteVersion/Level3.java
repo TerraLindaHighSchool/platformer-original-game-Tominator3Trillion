@@ -99,14 +99,14 @@ public class Level3 extends World
         addObject(smallBuilding2,2836,415);
         
         SmallBuilding smallBuilding3 = new SmallBuilding();
-        addObject(smallBuilding3,3700,515);
+        addObject(smallBuilding3,3700,505);
 
 
         BrickWall brickWall2 = new BrickWall();
         addObject(brickWall2,2454,160);
 
         Door door = new Door();
-        addObject(door,4515,613);
+        addObject(door,4525,613);
 
 
         megaPhone = new MegaPhone(new GreenfootSound("stationsSpeech.mp3"));
