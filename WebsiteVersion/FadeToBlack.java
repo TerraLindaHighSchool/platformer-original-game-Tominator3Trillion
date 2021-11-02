@@ -20,13 +20,14 @@ public class FadeToBlack extends VisualEffect
     }
     
     public FadeToBlack(World w, int dur, boolean reverse) {
+        if(reverse) {
+            transparency = 255;
+        }
         getImage().scale(w.getWidth(),w.getHeight());
         getImage().setTransparency(transparency);
         this.dur = dur;
         this.reverse = reverse;
-        if(reverse) {
-            transparency = 255;
-        }
+        
     }
     
    

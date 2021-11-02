@@ -48,7 +48,7 @@ public class MissileHill extends Actor
             getWorld().addObject(new CinematicBar(false), playerX, 800);
             //Greenfoot.playSound("buttonStartup.mp3");
         }
-        if(frame==180) {
+        if(frame==179) {
             Greenfoot.playSound("risingNoise.mp3");
             ((Level5)getWorld()).nextLevel();
             //Greenfoot.playSound("mechanicSound1.mp3");
@@ -62,7 +62,7 @@ public class MissileHill extends Actor
             }
         }
         
-        if(frame==1750) {
+        if(frame==1700) {
             siren.play();
             
         }
@@ -109,7 +109,7 @@ public class MissileHill extends Actor
                 }
             }
         }
-        if(launchFrame == 450) {
+        if(launchFrame == 453) {
             getWorld().addObject(new LaunchNuke(),bh.getX(), bh.getY()+55);
         }
         

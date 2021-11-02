@@ -65,8 +65,7 @@ public class Level5 extends World
         bgBase = new GreenfootImage(PIC_WIDTH, getHeight());
         scrollPosition = 1;
         bgBase.drawImage(bgImage, 0, 0);
-        addObject(new FadeToBlack(this, 2, true),600, getHeight()/2);
-        System.out.println("5:)");
+        addObject(new FadeToBlack(this, 4, true),600, getHeight()/2);
         prepare();
         
     }
@@ -171,10 +170,6 @@ public class Level5 extends World
     
      private void spawn()
     {
-        if(Math.random() < 0.0025)
-        {
-            addObject(new Rock(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
-        }
         if(Math.random() < 0.01)
         {
             addObject(new AcidRain(GRAVITY), Greenfoot.getRandomNumber(1200), -30);
